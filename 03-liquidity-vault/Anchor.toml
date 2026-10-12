@@ -1,0 +1,13 @@
+[toolchain]
+anchor_version = "0.31.1"
+solana_version = "2.1.0"
+package_manager = "npm"
+[programs.localnet]
+w8_vault = "2VY1E2cQrCA7usG83vShPUNMRqFTWWJKYkHNCiem16jM"
+[programs.devnet]
+w8_vault = "2VY1E2cQrCA7usG83vShPUNMRqFTWWJKYkHNCiem16jM"
+[provider]
+cluster = "localnet"
+wallet = "/home/mamis/.config/solana/w6-local.json"
+[scripts]
+test = "npm test"

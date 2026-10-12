@@ -1,0 +1,48 @@
+Deploying cluster: http://127.0.0.1:8899
+Upgrade authority: /home/mamis/.config/solana/w8-local.json
+Deploying program "w8_vault"...
+Program path: /home/mamis/.cache/w8-work/target/deploy/w8_vault.so...
+Program Id: 2VY1E2cQrCA7usG83vShPUNMRqFTWWJKYkHNCiem16jM
+
+Signature: bF3FGkKJnrDGvCEg3CoNtU3xtB3puNuDtvq5C58mzNUhYACdKkmdGMxwECDxPyx4DhEywQ7KTjZvjSBehCH8ipm
+
+Deploy success
+
+Found a 'test' script in the Anchor.toml. Running it as a test suite!
+
+Running test suite: "/home/mamis/.cache/w8-work/Anchor.toml"
+
+
+> w8-vault@0.1.0 test
+> ts-mocha -p tsconfig.json -t 60000 tests/**/*.ts
+
+(node:658) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/mamis/.cache/w8-work/tests/vault.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /home/mamis/.cache/w8-work/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+  W8 official card integration
+    ✔ initializes official vault accounts with PDA authority and zero supply (425ms)
+    ✔ creates card with owner vault and a blockchain timestamp (409ms)
+    ✔ isolates two users cards (416ms)
+    ✔ rejects duplicate vault initialization
+    ✔ rejects duplicate user card
+    ✔ rejects a forged card PDA without leaving an account
+    ✔ requires the user signature
+    ✔ rejects pause by a non-admin and preserves the flag
+    ✔ admin can pause (342ms)
+    ✔ paused vault rejects new cards and rolls back rent allocation
+    ✔ rejects closing someone else's card and preserves it
+    ✔ owner can close even while paused and receives all rent minus transaction fee (602ms)
+    ✔ rejects closing an already closed card
+    ✔ admin resumes and owner can recreate the closed card (1020ms)
+    ✔ rejects a card from another vault (840ms)
+    ✔ administrator cannot mint shares directly (414ms)
+
+
+  16 passing (6s)
+
+
+> w8-vault@0.1.0 typecheck
+> tsc --noEmit

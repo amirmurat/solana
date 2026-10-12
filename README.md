@@ -259,3 +259,7 @@ npm run mint
 Не использовать локальные ключи W6 для Devnet. Не размещать SECRET_KEY, JSON-ключи и seed-фразы внутри проекта. Не запускать mint повторно без проверки результата предыдущего запуска.
 
 Подтверждения: transfer-result.txt, mint-result.txt, balances.json. Все операции завершены; повторный запуск создаст новый токен и повторит операции.
+
+## Week 8 Vault card assignment
+
+[Completed official Week 8 assignment](03-liquidity-vault/README.md): created_at, owner-only closure with rent refund, admin pause; 16 integration tests and verified Devnet calls. [Defense notes](03-liquidity-vault/DEFENSE.md).

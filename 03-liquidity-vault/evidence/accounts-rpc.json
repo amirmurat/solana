@@ -1,0 +1,68 @@
+{
+  "jsonrpc": "2.0",
+  "result": {
+    "context": {
+      "apiVersion": "4.4.0-beta.0",
+      "slot": 510281311
+    },
+    "value": [
+      {
+        "data": [
+          "AgAAAJ/IZ9SpOs/0FVJmInoLRy99kUlOrlm2PSCYWYEVXWVO",
+          "base64"
+        ],
+        "executable": true,
+        "lamports": 833120,
+        "owner": "BPFLoaderUpgradeab1e11111111111111111111111",
+        "rentEpoch": 18446744073709551615,
+        "space": 36
+      },
+      {
+        "data": [
+          "5MRSpWLS65iv6vJQxh6cOCLQFkkuu4efjKIErWNhCkAf0UyMMd8pnY0Hu6tB+rJ2QgrCAhE6MiEzNZVrjAlXMvWMGpqLc4qZ2OwcWyXs3Ll2Y9G/RrgUeG8595dMhMzekKHpceRQSKR2sNZ2QgpxfWkZSVYlNbES5ObvVGdQ5MwN97XQIOrfMv0A",
+          "base64"
+        ],
+        "executable": false,
+        "lamports": 1351280,
+        "owner": "2VY1E2cQrCA7usG83vShPUNMRqFTWWJKYkHNCiem16jM",
+        "rentEpoch": 18446744073709551615,
+        "space": 138
+      },
+      {
+        "data": [
+          "AQAAAEfCXqUqJ+IRtXlmA9mxBu/EOOMHpG+BQUNW6CLQjHHdAAAAAAAAAAAGAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+          "base64"
+        ],
+        "executable": false,
+        "lamports": 1066800,
+        "owner": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+        "rentEpoch": 18446744073709551615,
+        "space": 82
+      },
+      {
+        "data": [
+          "jQe7q0H6snZCCsICEToyITM1lWuMCVcy9YwamotziplHwl6lKifiEbV5ZgPZsQbvxDjjB6RvgUFDVugi0Ixx3QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+          "base64"
+        ],
+        "executable": false,
+        "lamports": 1488440,
+        "owner": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+        "rentEpoch": 18446744073709551615,
+        "space": 165
+      },
+      {
+        "data": [
+          "Y5yFVcA6ygpHwl6lKifiEbV5ZgPZsQbvxDjjB6RvgUFDVugi0Ixx3a/q8lDGHpw4ItAWSS67h5+MogStY2EKQB/RTIwx3ymd/ybizGoAAAAA",
+          "base64"
+        ],
+        "executable": false,
+        "lamports": 1061720,
+        "owner": "2VY1E2cQrCA7usG83vShPUNMRqFTWWJKYkHNCiem16jM",
+        "rentEpoch": 18446744073709551615,
+        "space": 81
+      },
+      null
+    ]
+  },
+  "id": 1
+}

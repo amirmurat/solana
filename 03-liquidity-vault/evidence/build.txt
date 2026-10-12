@@ -1,0 +1,133 @@
+   Compiling serde_core v1.0.229
+   Compiling generic-array v0.14.7
+   Compiling serde v1.0.229
+   Compiling typenum v1.20.1
+   Compiling cfg-if v1.0.5
+   Compiling solana-define-syscall v2.3.0
+   Compiling subtle v2.6.1
+   Compiling borsh v1.5.7
+   Compiling five8_core v0.1.2
+   Compiling zerocopy v0.8.62
+   Compiling bytemuck v1.25.2
+   Compiling ahash v0.8.12
+   Compiling five8 v0.2.1
+   Compiling solana-sanitize v2.2.1
+   Compiling solana-atomic-u64 v2.2.1
+   Compiling once_cell v1.21.4
+   Compiling num-traits v0.2.19
+   Compiling five8_const v0.1.4
+   Compiling zmij v1.0.23
+   Compiling serde_json v1.0.154
+   Compiling itoa v1.0.18
+   Compiling memchr v2.8.3
+   Compiling solana-msg v2.2.1
+   Compiling solana-program-memory v2.3.1
+   Compiling thiserror v2.0.21
+   Compiling keccak v0.1.6
+   Compiling solana-program-option v2.2.1
+   Compiling zeroize v1.8.2
+   Compiling blake3 v1.5.5
+   Compiling bv v0.11.1
+   Compiling arrayvec v0.7.8
+   Compiling byteorder v1.5.0
+   Compiling constant_time_eq v0.3.1
+   Compiling arrayref v0.3.9
+   Compiling log v0.4.34
+   Compiling rand_core v0.6.4
+   Compiling base64 v0.22.1
+   Compiling solana-decode-error v2.3.0
+   Compiling merlin v3.0.0
+   Compiling lazy_static v1.5.1
+   Compiling memoffset v0.9.1
+   Compiling thiserror v1.0.69
+   Compiling solana-secp256k1-recover v2.2.1
+   Compiling solana-big-mod-exp v2.2.1
+   Compiling getrandom v0.2.17
+   Compiling bs58 v0.5.1
+   Compiling solana-native-token v2.3.0
+   Compiling solana-curve25519 v2.3.13
+   Compiling num_enum v0.7.6
+   Compiling solana-security-txt v1.1.3
+   Compiling base64 v0.21.7
+   Compiling crypto-common v0.1.7
+   Compiling block-buffer v0.10.4
+   Compiling digest v0.10.7
+   Compiling sha2 v0.10.9
+   Compiling sha3 v0.10.9
+   Compiling serde_bytes v0.11.19
+   Compiling solana-hash v2.3.0
+   Compiling bincode v1.3.3
+   Compiling solana-short-vec v2.2.1
+   Compiling solana-fee-calculator v2.2.1
+   Compiling solana-sha256-hasher v2.3.0
+   Compiling solana-serde-varint v2.2.2
+   Compiling solana-blake3-hasher v2.2.1
+   Compiling solana-keccak-hasher v2.2.1
+   Compiling hashbrown v0.13.2
+   Compiling borsh v0.10.4
+   Compiling solana-pubkey v2.4.0
+   Compiling solana-borsh v2.2.1
+   Compiling solana-instruction v2.3.3
+   Compiling solana-sdk-ids v2.2.1
+   Compiling solana-nonce v2.2.1
+   Compiling solana-sysvar-id v2.2.1
+   Compiling solana-clock v2.2.3
+   Compiling solana-rent v2.2.1
+   Compiling solana-slot-hashes v2.2.1
+   Compiling solana-epoch-schedule v2.2.1
+   Compiling solana-last-restart-slot v2.2.1
+   Compiling solana-slot-history v2.2.1
+   Compiling solana-epoch-rewards v2.2.1
+   Compiling solana-program-error v2.2.2
+   Compiling solana-system-interface v1.0.0
+   Compiling solana-serialize-utils v2.2.1
+   Compiling solana-stable-layout v2.2.1
+   Compiling solana-zk-sdk v2.3.13
+   Compiling solana-bincode v2.2.1
+   Compiling solana-transaction-error v2.2.1
+   Compiling solana-account-info v2.3.0
+   Compiling solana-program-pack v2.2.1
+   Compiling solana-address-lookup-table-interface v2.2.2
+   Compiling solana-loader-v2-interface v2.2.1
+   Compiling spl-discriminator v0.4.1
+   Compiling solana-cpi v2.2.1
+   Compiling solana-program-entrypoint v2.3.0
+   Compiling solana-account v2.2.1
+   Compiling solana-instructions-sysvar v2.2.2
+   Compiling spl-memo v6.0.0
+   Compiling solana-stake-interface v1.2.1
+   Compiling solana-message v2.4.0
+   Compiling solana-feature-gate-interface v2.2.2
+   Compiling solana-loader-v4-interface v2.2.1
+   Compiling solana-vote-interface v2.2.6
+   Compiling solana-loader-v3-interface v5.0.0
+   Compiling spl-pod v0.5.1
+   Compiling spl-token-confidential-transfer-ciphertext-arithmetic v0.2.1
+   Compiling spl-type-length-value v0.7.0
+   Compiling spl-token-group-interface v0.5.0
+   Compiling solana-sysvar v2.3.0
+   Compiling spl-token-metadata-interface v0.6.0
+   Compiling solana-program v2.3.0
+   Compiling spl-program-error v0.6.0
+   Compiling spl-token-confidential-transfer-proof-extraction v0.2.1
+   Compiling spl-token v7.0.0
+   Compiling anchor-lang v0.31.1
+   Compiling spl-tlv-account-resolution v0.9.0
+   Compiling spl-elgamal-registry v0.1.1
+   Compiling spl-transfer-hook-interface v0.9.0
+   Compiling spl-token-2022 v6.0.0
+   Compiling anchor-spl v0.31.1
+   Compiling w8-vault v0.1.0 (/home/mamis/.cache/w8-work/programs/w8-vault)
+warning: use of deprecated method `anchor_lang::prelude::AccountInfo::<'a>::realloc`: Use AccountInfo::resize() instead
+ --> programs/w8-vault/src/lib.rs:6:1
+  |
+6 | #[program]
+  | ^^^^^^^^^^
+  |
+  = note: `#[warn(deprecated)]` on by default
+  = note: this warning originates in the attribute macro `program` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: `w8-vault` (lib) generated 1 warning
+    Finished `release` profile [optimized] target(s) in 24.03s
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.83s
+     Running unittests src/lib.rs (/home/mamis/.cache/w8-work/target/debug/build/w8-vault/2402b0c69626e44a/out/w8_vault-2402b0c69626e44a)

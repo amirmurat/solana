@@ -1,0 +1,78 @@
+{
+  "programId": "2VY1E2cQrCA7usG83vShPUNMRqFTWWJKYkHNCiem16jM",
+  "network": "devnet",
+  "admin": "Cqi8qDjiHjF35qDUcW398yPXfi4ALCRDUUhDT1JTMMG8",
+  "underlyingMint": "AVXKppnYRA4MR8dYFcYFigWqwf6n69AsNieCRyJkZKMz",
+  "accounts": {
+    "vaultState": "5q7rBzggEMADJE17bKxPgxz6yeu393cjcLDkJYWGAhVn",
+    "vaultTokenAccount": "Fbmt4F9XYUaZgaXJ1XawJuMFRrTnL3usV67nCbNML1ZD",
+    "shareMint": "8zKWGF7HRwjebJtcs6NSsbzPXwBH2VF3HuH39caDApEV",
+    "userCard": "J1xWXKpgPB8oRoDWj5XNUmEjnamntZQNtUHsAt6dgo87"
+  },
+  "initializeVault": "yuKAB6k6uNACJDsZzce7ovCXs7JtLdzzkmT2bDUzoqoqGbFBMm78XKEW76MvHMtKnnsmvTG2ntFXigHTwXZMRUk",
+  "createUserCard": "371DsvKQG5HYnZpPd1LM3NtujzdKSUtmhau9QeJuSdezxHWZrQCZnqLwTvQ4rha66yd36eNFK4g7Ct4pAKWqpBEz",
+  "firstCreatedAt": "1791812043",
+  "pause": "2chcDFVgNkYEFEFV87FvQpFxxXFe7sAz4qwRmov8ZBHxBKGkANPb6WjrHDnrGp5XZ5RP2BLXJdJM6cG7ZZY8qkMc",
+  "testUserFunding": "5LZHGWQdwvqPgUDZijAmCw9zPyGsUL7AJpd4VhQuS5y7mzGHYjHRazWhijiWnEK13Ej1kyLUWnwBEqvgwGyNovru",
+  "pausedCreationRejected": "VaultPaused",
+  "rejectedUser": "ADP7pLuUnJXSdYRqqE3yUpUq6W6nV8fDPhkFmNFZP1yc",
+  "rejectedCard": "CCRh5CVVhaMC79SphpPMRcyJ2RrRc6mR2Dv578jKjG9M",
+  "cardRentLamports": 1061720,
+  "closeUserCard": "31gUG1Xi6pyAJZFKYs1b5XHwj68LqLYR7afXV92AcQe88RMycKfpnM3F4Gh8MVcCzdCXJDpGmGGCko6yMBM9X3ej",
+  "closeProof": {
+    "slot": 510280634,
+    "fee": 5000,
+    "ownerBalanceChange": 1056720,
+    "returnedRent": 1061720,
+    "accountAbsent": true
+  },
+  "resume": "CB8w5UVBzBsbjNs6naxwRAa42UJD8TZwabzfVFjSvPrGRRKwF4k5M8ohoowEFf5q9SgWSMw8BAvz8zuUFL6oo1q",
+  "recreateUserCard": "3LUUURHpqqPNfcu7JP2CkwPPzENgNjgBS44SmdeHHHTFgnsUExrwJ8VSeeBKdVDA8x96pXNNNzs3bkN9cLFvanYt",
+  "verified": {
+    "paused": false,
+    "createdAt": "1791812134",
+    "shareSupply": "0",
+    "tokenVaultBalance": "0",
+    "mintAuthority": "5q7rBzggEMADJE17bKxPgxz6yeu393cjcLDkJYWGAhVn",
+    "tokenAuthority": "5q7rBzggEMADJE17bKxPgxz6yeu393cjcLDkJYWGAhVn",
+    "checkedAt": "2026-10-12T13:35:35.720Z"
+  },
+  "transactions": {
+    "initializeVault": {
+      "signature": "yuKAB6k6uNACJDsZzce7ovCXs7JtLdzzkmT2bDUzoqoqGbFBMm78XKEW76MvHMtKnnsmvTG2ntFXigHTwXZMRUk",
+      "slot": 510280264,
+      "err": null,
+      "explorer": "https://explorer.solana.com/tx/yuKAB6k6uNACJDsZzce7ovCXs7JtLdzzkmT2bDUzoqoqGbFBMm78XKEW76MvHMtKnnsmvTG2ntFXigHTwXZMRUk?cluster=devnet"
+    },
+    "createUserCard": {
+      "signature": "371DsvKQG5HYnZpPd1LM3NtujzdKSUtmhau9QeJuSdezxHWZrQCZnqLwTvQ4rha66yd36eNFK4g7Ct4pAKWqpBEz",
+      "slot": 510280271,
+      "err": null,
+      "explorer": "https://explorer.solana.com/tx/371DsvKQG5HYnZpPd1LM3NtujzdKSUtmhau9QeJuSdezxHWZrQCZnqLwTvQ4rha66yd36eNFK4g7Ct4pAKWqpBEz?cluster=devnet"
+    },
+    "pause": {
+      "signature": "2chcDFVgNkYEFEFV87FvQpFxxXFe7sAz4qwRmov8ZBHxBKGkANPb6WjrHDnrGp5XZ5RP2BLXJdJM6cG7ZZY8qkMc",
+      "slot": 510280276,
+      "err": null,
+      "explorer": "https://explorer.solana.com/tx/2chcDFVgNkYEFEFV87FvQpFxxXFe7sAz4qwRmov8ZBHxBKGkANPb6WjrHDnrGp5XZ5RP2BLXJdJM6cG7ZZY8qkMc?cluster=devnet"
+    },
+    "closeUserCard": {
+      "signature": "31gUG1Xi6pyAJZFKYs1b5XHwj68LqLYR7afXV92AcQe88RMycKfpnM3F4Gh8MVcCzdCXJDpGmGGCko6yMBM9X3ej",
+      "slot": 510280634,
+      "err": null,
+      "explorer": "https://explorer.solana.com/tx/31gUG1Xi6pyAJZFKYs1b5XHwj68LqLYR7afXV92AcQe88RMycKfpnM3F4Gh8MVcCzdCXJDpGmGGCko6yMBM9X3ej?cluster=devnet"
+    },
+    "resume": {
+      "signature": "CB8w5UVBzBsbjNs6naxwRAa42UJD8TZwabzfVFjSvPrGRRKwF4k5M8ohoowEFf5q9SgWSMw8BAvz8zuUFL6oo1q",
+      "slot": 510280642,
+      "err": null,
+      "explorer": "https://explorer.solana.com/tx/CB8w5UVBzBsbjNs6naxwRAa42UJD8TZwabzfVFjSvPrGRRKwF4k5M8ohoowEFf5q9SgWSMw8BAvz8zuUFL6oo1q?cluster=devnet"
+    },
+    "recreateUserCard": {
+      "signature": "3LUUURHpqqPNfcu7JP2CkwPPzENgNjgBS44SmdeHHHTFgnsUExrwJ8VSeeBKdVDA8x96pXNNNzs3bkN9cLFvanYt",
+      "slot": 510280648,
+      "err": null,
+      "explorer": "https://explorer.solana.com/tx/3LUUURHpqqPNfcu7JP2CkwPPzENgNjgBS44SmdeHHHTFgnsUExrwJ8VSeeBKdVDA8x96pXNNNzs3bkN9cLFvanYt?cluster=devnet"
+    }
+  }
+}
