@@ -1,0 +1,32 @@
+
+> solana-practice@1.0.0 mint
+> ts-node src/token-mint.ts
+
+Network verified: Devnet
+Payer: Cqi8qDjiHjF35qDUcW398yPXfi4ALCRDUUhDT1JTMMG8
+
+🪙 Creating MYCOIN...
+✅ Mint address: AVXKppnYRA4MR8dYFcYFigWqwf6n69AsNieCRyJkZKMz
+🔗 https://explorer.solana.com/address/AVXKppnYRA4MR8dYFcYFigWqwf6n69AsNieCRyJkZKMz?cluster=devnet
+
+📦 Creating ATA...
+✅ ATA: HCFZVAEDPcCx4RoYhfkuDKtNyHuuRvjkp1Cyceqgj6c4
+
+🏭 Minting 10,000 MYCOIN...
+✅ Minted 10,000 MYCOIN
+
+📤 Sending 100 MYCOIN to 3 recipients...
+✅ Recipient 1: ADP7pLuUnJXSdYRqqE3yUpUq6W6nV8fDPhkFmNFZP1yc
+🔗 https://explorer.solana.com/tx/3kVtRe5tAkwgE5XVkCEMdXf2Suu3Sb14e385iD2f53ALuwMGc17UWEoC9WNPLaqKHSB7fmKWyS4B3jdTYZENBXwE?cluster=devnet
+✅ Recipient 2: CUtjeoFbyepB7WaFh5WQZQggi6Lj8u5SkURnj7ywHTqL
+🔗 https://explorer.solana.com/tx/3gz8c2GN1diHdsCQwp5fpHuZiFJtLjWmnAgwTvNyJCXCKM4QhX5oxWtp6rRe7if5jQuhrGuHcMVxkrHKmefX5JhL?cluster=devnet
+✅ Recipient 3: ANtnoCG7moi7T32M1QSFwFEZ9gj8ds3ZWJXKvxJqz3j8
+🔗 https://explorer.solana.com/tx/Uqku7Yddv86qHPvYv65Cy9SbZ4X7Qcgeke823S5jUBEKvikijKDTSG8GGqYuiido1aUxUBCqtFzpXEA2z3e4JDa?cluster=devnet
+
+🔥 Burning 50 MYCOIN...
+✅ Burned 50 MYCOIN
+🔗 https://explorer.solana.com/tx/nQJsoYzJYvGFd2QqpWWNezMt6dHXXzjsyWdjW2rEgMUT5MhzKsfkPAvB5HFhYWkxjViGShCr55pRRr3qXUZzb9n?cluster=devnet
+
+💰 Final balance: 9650 MYCOIN
+Supply after burn: 9950 tokens; balance and supply verified
+🔗 Token in Explorer: https://explorer.solana.com/address/AVXKppnYRA4MR8dYFcYFigWqwf6n69AsNieCRyJkZKMz?cluster=devnet

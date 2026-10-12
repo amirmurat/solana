@@ -1,0 +1,20 @@
+
+> solana-practice@1.0.0 dev
+> ts-node src/solana-practice.ts
+
+Network verified: Devnet
+Sender: Cqi8qDjiHjF35qDUcW398yPXfi4ALCRDUUhDT1JTMMG8
+📭 Recipient: Cf3jC3Dd4K5qcBzQUAGSBcXEUuXMLBFc7s9TmHTG28nP
+
+💰 Balance before: 0.5 SOL
+
+🚀 Sending 0.01 SOL to Cf3jC3Dd4K5qcBzQUAGSBcXEUuXMLBFc7s9TmHTG28nP
+📝 Memo: "Hello Solana"
+
+─────────────────────────────────────
+✅ Transaction confirmed!
+📋 Signature: 54oN1nchGbSGytH5FaA9duPK9oymw7efGsXLXsvCHQqQfkdSuKox18j6XHb7D8wz4jgcjRmaCmgoWb86NPrY4Z7f
+🔢 Slot:      510197943
+🔗 Explorer:  https://explorer.solana.com/tx/54oN1nchGbSGytH5FaA9duPK9oymw7efGsXLXsvCHQqQfkdSuKox18j6XHb7D8wz4jgcjRmaCmgoWb86NPrY4Z7f?cluster=devnet
+─────────────────────────────────────
+💰 Balance after:  0.489995 SOL
