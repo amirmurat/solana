@@ -1,0 +1,16 @@
+[toolchain]
+anchor_version = "0.31.1"
+solana_version = "2.1.0"
+package_manager = "npm"
+[features]
+resolution = true
+skip-lint = false
+[programs.localnet]
+w6_profile = "53LECgzYssC16Gib3H8NByJpDCnRjE3UyGzt3QW1aZxJ"
+[provider]
+cluster = "Localnet"
+wallet = "~/.config/solana/id.json"
+[scripts]
+test = "npm test"
+[test]
+startup_wait = 10000
