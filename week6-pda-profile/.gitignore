@@ -1,0 +1,10 @@
+node_modules/
+target/
+.anchor/
+.env
+.env.*
+*.log
+*keypair*.json
+*wallet*.json
+*secret*.json
+w6-local.json
