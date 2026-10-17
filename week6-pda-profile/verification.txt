@@ -1,0 +1,8 @@
+WSL 3.0.1; Ubuntu 24.04; Rust stable 1.99.0; Solana 2.1.0.
+AVM 0.31.1 / Anchor 0.31.1; Node 22.23.3; npm 10.9.9; Yarn 1.22.22; Git 2.43.0.
+anchor build: PASS
+Localnet deployment: PASS (127.0.0.1:8899)
+Tests: 5 PASS — create, owner update, read/PDA, unauthorized update rejected, UTF-8 length rejected.
+npm run typecheck: PASS
+Helius Devnet: pending private RPC configuration.
+No Mainnet transactions. Keys excluded from submission archive.
