@@ -29,7 +29,7 @@ cargo test --lib
 bash scripts/test-local.sh
 ```
 
-CI generates a disposable program ID and runs actual build, deployment and tests on a local validator. `evidence/` is an Actions artifact; do not interpret a pending workflow as a passed check. See REPORT.md for confirmed results.
+CI generates a disposable program ID and runs actual build, deployment and tests on a local validator. [Implementation verification passed](https://github.com/amirmurat/solana/actions/runs/40202145675): **48 integration tests, 15 Rust tests**, SBF build, localnet deployment and TypeScript typecheck. Public logs are in `evidence/`; see REPORT.md for the tested commit and limits.
 
 Accounts retain W9's 194-byte VaultState and 97-byte UserCard. A separate program identity isolates W8/W9 deployments; no migration or in-place upgrade is performed. Do not use the W9 program keypair for this project.
 

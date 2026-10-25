@@ -31,7 +31,7 @@ async function main() {
   const info = await provider.connection.getAccountInfo(p.programId);
   if (!info?.executable)
     throw Error(
-      "Deploy this W9 program to Devnet before running the smoke test",
+      "Deploy this W10 program to Devnet before running the smoke test",
     );
   const payer = (provider.wallet as Wallet).payer;
   const mint = await createMint(
