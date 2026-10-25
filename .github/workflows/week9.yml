@@ -1,0 +1,47 @@
+name: Week 9 vault checks
+on:
+  workflow_dispatch:
+  push:
+    branches: [week9-deposit-share-tokens]
+    paths: ['04-deposit-shares/**', '.github/workflows/week9.yml']
+  pull_request:
+    paths: ['04-deposit-shares/**', '.github/workflows/week9.yml']
+permissions:
+  contents: read
+jobs:
+  localnet:
+    runs-on: ubuntu-22.04
+    defaults:
+      run:
+        working-directory: 04-deposit-shares
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: 04-deposit-shares/package-lock.json
+      - name: Install Rust, Solana 2.1.0 and Anchor 0.31.1
+        run: |
+          rustup toolchain install stable --profile minimal
+          sh -c "$(curl -sSfL https://release.anza.xyz/v2.1.0/install)"
+          echo "$HOME/.local/share/solana/install/active_release/bin" >> "$GITHUB_PATH"
+          cargo install anchor-cli --version 0.31.1 --locked
+      - run: npm ci
+      - name: Generate disposable local-only program identity
+        run: |
+          mkdir -p target/deploy
+          solana-keygen new --silent --no-bip39-passphrase --outfile target/deploy/w9_vault-keypair.json >/dev/null
+          anchor keys sync
+      - name: Build and arithmetic tests
+        run: |
+          mkdir -p evidence
+          anchor build 2>&1 | tee evidence/ci-build.txt
+          cargo test --lib 2>&1 | tee evidence/ci-rust-tests.txt
+      - name: Actual local validator integration and TypeScript checks
+        run: bash scripts/test-local.sh
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: week9-public-test-evidence
+          path: 04-deposit-shares/evidence/

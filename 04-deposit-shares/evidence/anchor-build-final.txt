@@ -1,0 +1,15 @@
+warning: use of deprecated method `anchor_lang::prelude::AccountInfo::<'a>::realloc`: Use AccountInfo::resize() instead
+ --> programs/w9-vault/src/lib.rs:6:1
+  |
+6 | #[program]
+  | ^^^^^^^^^^
+  |
+  = note: `#[warn(deprecated)]` on by default
+  = note: this warning originates in the attribute macro `program` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: `w9-vault` (lib) generated 1 warning
+    Finished `release` profile [optimized] target(s) in 0.17s
+[2026-10-25T13:20:10.624090024Z WARN  cargo_build_sbf] The following functions are undefined and not known syscalls ["abort", "sol_log_", "sol_memcmp_", "sol_memcpy_", "sol_log_data", "sol_get_clock_sysvar", "sol_get_rent_sysvar", "sol_invoke_signed_rust", "sol_memset_", "sol_try_find_program_address", "sol_create_program_address", "sol_log_pubkey", "sol_sha256"].
+[2026-10-25T13:20:10.624112948Z WARN  cargo_build_sbf]          Calling them will trigger a run-time error.
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.13s
+     Running unittests src/lib.rs (<project>/target/debug/build/w9-vault/731548e8f9bf77d1/out/w9_vault-731548e8f9bf77d1)

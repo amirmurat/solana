@@ -1,0 +1,31 @@
+{
+  "cluster": "http://127.0.0.1:8899",
+  "programId": "BjiFbMtqS8a5wj37pTNgGkAuNJ7urYjV1SG6WQxF18AX",
+  "mint": "3nv7BoenxiYWPdjveKwCLQdTG5j8TtWzFKirtCQZ3h4p",
+  "vault": "21woXMgkUqrc9B6bquD32TATGaLaLML7h4GWBKA3UZwC",
+  "signatures": [
+    "2PcTJmJRCU4sNJbKhHvGeAgqDMhoQHyJRWu3Ss7shoMAx8DzLvwELR5d2SBbY5tc3KzUGziCd4VYpM5trm89cBHo",
+    "rizGKswNTVDCPHPYs7sseuJDAQSFJKovJ1UrQCVVQzqNG93YqC5YKwd4RFA1KuMYaCmbjLPJPtD7pCMvvStBKFz",
+    "5viForZtnfC4vNgQhNqQyk7p86aBVnF3w4XZxVfdoNA1xGiXUeM1PvKJNXFmjxnbHii8g1aDMEshBG5Mi83b55vt"
+  ],
+  "gross": [
+    100000000,
+    50000000,
+    25000000
+  ],
+  "shareBalances": [
+    "99000000",
+    "49500000",
+    "24750000"
+  ],
+  "state": {
+    "source": "400000000",
+    "reserve": "173250000",
+    "fee": "1750000",
+    "supply": "173250000",
+    "tokens": "173250000",
+    "shares": "173250000",
+    "deposited": "99000000",
+    "issued": "99000000"
+  }
+}

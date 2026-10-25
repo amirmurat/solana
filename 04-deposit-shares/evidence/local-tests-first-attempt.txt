@@ -1,0 +1,85 @@
+Deploying cluster: http://127.0.0.1:8899
+Upgrade authority: /root/.config/solana/w9-local.json
+Deploying program "w9_vault"...
+Program path: <project>/target/deploy/w9_vault.so...
+Program Id: BjiFbMtqS8a5wj37pTNgGkAuNJ7urYjV1SG6WQxF18AX
+
+Signature: 4wHhqyBEj1s4XuD4uL9n35igsA12wiau2o3v46W4zsy7CJfERYukZEmAeAWcrxefY8QghxZBTVna1n5Fm9Xe1mWq
+
+Deploy success
+
+Found a 'test' script in the Anchor.toml. Running it as a test suite!
+
+Running test suite: "<project>/Anchor.toml"
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> w9-vault@0.1.0 test
+> ts-mocha -p tsconfig.json -t 60000 tests/**/*.ts
+
+bigint: Failed to load bindings, pure JS will be used (try npm run rebuild?)
+(node:649) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file://<project>/tests/deposit.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to <project>/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+  W9 deposits: actual SPL CPIs
+    ✔ minimum and share decimals follow the underlying mint (0 and 9) (1637ms)
+    ✔ stores fixed fee destination, one-token minimum and fresh account sizes
+    ✔ three users deposit 100, 50, 25: exact balances, fee and shares 4:2:1 (1227ms)
+    ✔ repeated deposits accumulate, with fee rounded down at base-unit precision (400ms)
+    ✔ rejects zero and below-minimum deposits without any balance/state change
+    ✔ accepts exactly the minimum (376ms)
+    ✔ requires a previously created card
+    ✔ pause blocks deposit; resume restores it (1209ms)
+    1) rejects an alternative fee account
+    ✔ rejects another users card, source and share destination
+    ✔ rejects wrong underlying mint and wrong share mint (760ms)
+    ✔ rejects a substituted vault reserve
+    ✔ insufficient funds rolls back the already executed fee transfer
+    ✔ requires the depositor signature
+    ✔ cannot close/recreate a funded card to erase accounting
+    ✔ direct reserve donations cannot change the tracked share price (746ms)
+    ✔ rejects source equal to fee destination (811ms)
+    ✔ external share burns trigger explicit accounting error and no partial changes (421ms)
+
+  W9 inherited card integration
+    ✔ initializes official vault accounts with PDA authority and zero supply (410ms)
+    ✔ creates card with owner vault and a blockchain timestamp (405ms)
+    ✔ isolates two users cards (405ms)
+    ✔ rejects duplicate vault initialization
+    ✔ rejects duplicate user card
+    ✔ rejects a forged card PDA without leaving an account
+    ✔ requires the user signature
+    ✔ rejects pause by a non-admin and preserves the flag
+    ✔ admin can pause (375ms)
+    ✔ paused vault rejects new cards and rolls back rent allocation
+    ✔ rejects closing someone else's card and preserves it
+    ✔ owner can close even while paused and receives all rent minus transaction fee (390ms)
+    ✔ rejects closing an already closed card
+    ✔ admin resumes and owner can recreate the closed card (1211ms)
+    ✔ rejects a card from another vault (818ms)
+    ✔ administrator cannot mint shares directly (408ms)
+
+
+  33 passing (22s)
+  1 failing
+
+  1) W9 deposits: actual SPL CPIs
+       rejects an alternative fee account:
+     Error: Simulation failed.
+Message: Transaction simulation failed: Error processing Instruction 0: Provided owner is not allowed.
+Logs:
+[
+  "Program ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL invoke [1]",
+  "Program log: Create",
+  "Program ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL consumed 3429 of 200000 compute units",
+  "Program ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL failed: Provided owner is not allowed"
+].
+Catch the `SendTransactionError` and call `getLogs()` on it for full details.
+      at Connection.sendEncodedTransaction (node_modules/@solana/web3.js/src/connection.ts:6053:13)
+      at processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at Connection.sendRawTransaction (node_modules/@solana/web3.js/src/connection.ts:6009:20)
+      at Connection.sendTransaction (node_modules/@solana/web3.js/src/connection.ts:5997:12)
+      at sendAndConfirmTransaction (node_modules/@solana/web3.js/src/utils/send-and-confirm-transaction.ts:36:21)

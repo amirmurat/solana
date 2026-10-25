@@ -1,0 +1,7 @@
+{
+  "programId": "BjiFbMtqS8a5wj37pTNgGkAuNJ7urYjV1SG6WQxF18AX",
+  "cluster": "localnet",
+  "sha256": "145af847b952e44ba07fb12d26bbede0b0df5694b5f5f4ede18cd66043714232",
+  "bytes": 308608,
+  "note": "Built SBF binary tested on localnet. No Devnet deployment."
+}
