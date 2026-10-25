@@ -1,0 +1,13 @@
+[toolchain]
+anchor_version = "0.31.1"
+solana_version = "2.1.0"
+package_manager = "npm"
+[programs.localnet]
+w9_vault = "BjiFbMtqS8a5wj37pTNgGkAuNJ7urYjV1SG6WQxF18AX"
+[programs.devnet]
+w9_vault = "BjiFbMtqS8a5wj37pTNgGkAuNJ7urYjV1SG6WQxF18AX"
+[provider]
+cluster = "localnet"
+wallet = "~/.config/solana/w9-local.json"
+[scripts]
+test = "npm test"
