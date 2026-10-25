@@ -1,0 +1,13 @@
+[toolchain]
+anchor_version = "0.31.1"
+solana_version = "2.1.0"
+package_manager = "npm"
+[programs.localnet]
+w10_vault = "F4owJE4EFYLhcBnbPLHrwsuKLuLFFDnyYKAgARaJZaAx"
+[programs.devnet]
+w10_vault = "F4owJE4EFYLhcBnbPLHrwsuKLuLFFDnyYKAgARaJZaAx"
+[provider]
+cluster = "localnet"
+wallet = "~/.config/solana/w10-local.json"
+[scripts]
+test = "npm test"
