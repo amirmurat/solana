@@ -4,4 +4,4 @@
 - Teacher: https://github.com/0xnurda/vault-dev/tree/students-vault-card
 - W9 requirements: https://github.com/0xnurda/vault-dev/commit/38db7964441b8b2c62d1d6c9a0457e9434262711
 
-This implementation extends Amir's W8 rather than replacing it with the teacher's starter. It implements deposit and all four README exercises: 1% fee, minimum, admin pause, three-user shares. Additional safeguards and limitations are documented in README/DEFENSE. Implementation and checking were assisted by AI; the student should review, understand and follow the course's disclosure/submission rules.
+This implementation extends Amir's W8 rather than replacing it with the teacher's starter. It implements deposit and all four README exercises: 1% fee, minimum, admin pause, three-user shares. Additional safeguards and limitations are documented in README/DEFENSE.

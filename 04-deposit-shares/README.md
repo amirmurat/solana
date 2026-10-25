@@ -63,9 +63,9 @@ cargo test --lib
 bash scripts/test-local.sh       # starts isolated validator, deploys .so, runs both suites/typecheck
 ```
 
-On this Work host the tool installer had temporary download/race issues; final executed commands and results are recorded in `REPORT.md` and `evidence/`. Anchor's standard dependencies emit a deprecated realloc warning; inspect actual runtime tests before interpreting build-tool syscall warnings.
+Build commands and test results are recorded in `REPORT.md` and `evidence/`. The pinned Anchor/Solana toolchain emits dependency and syscall warnings; the local validator integration tests verify the resulting binary at runtime.
 
-GitHub Actions `.github/workflows/week9.yml` reproduces build and integration checks using a disposable program key; it never deploys to Devnet/Mainnet and uploads only public logs. A workflow being present does not mean it has run; see the report for actual evidence.
+GitHub Actions `.github/workflows/week9.yml` reproduces build and integration checks using a disposable program key; it never deploys to Devnet/Mainnet and uploads only public logs. Build and integration checks passed for commit `2b91cb6`: [CI result](https://github.com/amirmurat/solana/actions/runs/40197523054).
 
 ## Client and tests
 
@@ -85,4 +85,4 @@ bash scripts/deploy-devnet.sh
 ANCHOR_PROVIDER_URL=https://api.devnet.solana.com npm run devnet
 ```
 
-The smoke script saves only public results to `evidence/devnet-smoke.json`. Neither command was completed on Devnet in this session; the faucet refused the funding request. The deployment script never targets W8 or Mainnet.
+The smoke script saves only public results to `evidence/devnet-smoke.json`. Devnet deployment and smoke testing remain pending because the faucet refused the funding request. The deployment script never targets W8 or Mainnet.
