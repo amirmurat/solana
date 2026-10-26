@@ -1,0 +1,7 @@
+{
+  "programId": "DRayAUgENGQBKVaX8owNhgzkEDyoHTGVEGHVJT1E9pfH",
+  "sourceCluster": "devnet",
+  "snapshotDate": "2026-10-25",
+  "sha256": "60255f5ce990ef6ac6847e2316400d2dc2cb83968cb885bf44d6dfac2531ad43",
+  "note": "Real official Raydium program dumped from Devnet. The CPI interface crate is not used as an executable test substitute."
+}
