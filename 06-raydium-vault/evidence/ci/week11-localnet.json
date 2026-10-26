@@ -1,0 +1,16 @@
+{
+  "cluster": "localnet",
+  "pool": "CcnftQ6PEoCkMAh7oKXMME3jwmBTPGGpUThNyaKeZEaw",
+  "mintA": "4GS4ZGfsxV4g65A4g7sNy4yx54k85Cr2cEX3T4oGYtwc",
+  "mintB": "AqLRC3WXJs3Yoo4wwEoGDv2SXgRaK7EXpbNeoTKEJyCt",
+  "manualNft": "6yJhRUCoy9vyLZM6sPnthCmCsVZyMYMAMRW8J4UsUXu",
+  "manualLower": -1080,
+  "manualUpper": 900,
+  "initialPrice": "1",
+  "lowerPrice": "0.89763244330945058506",
+  "upperPrice": "1.0941693602602064192",
+  "signatures": [
+    "3271rThw9qLMVM9MT8eE8Dpm2AoFSEv5fgierU829EatV8SfoZWJqkzsU8QhGgZRm8sucEgZmk6AwRuibTNoAnpc",
+    "HqBoMWPGv9mTios9n4soB5EGQDDQyvN1zJuACXpwfRYZT8NrZeHYZ9h2J5Tp2X1Weuj2Uei1jbWzSa5V2KYVeqh"
+  ]
+}
