@@ -6,6 +6,7 @@ import {
   setProvider,
 } from "@coral-xyz/anchor";
 import {
+  Connection,
   Keypair,
   PublicKey,
   SystemProgram,
@@ -48,7 +49,12 @@ import {
 const idl = JSON.parse(readFileSync("target/idl/raydium_vault.json", "utf8"));
 
 describe("W11–W13 with the official Raydium CLMM program", () => {
-  const provider = AnchorProvider.env();
+  const env = AnchorProvider.env();
+  const provider = new AnchorProvider(
+    new Connection(env.connection.rpcEndpoint, "confirmed"),
+    env.wallet,
+    { commitment: "confirmed", preflightCommitment: "confirmed" },
+  );
   setProvider(provider);
   const payer = (provider.wallet as Wallet).payer;
   const p = new Program<RaydiumVault>(idl as RaydiumVault, provider),
@@ -273,6 +279,7 @@ describe("W11–W13 with the official Raydium CLMM program", () => {
         true,
       );
     expect(result.error).not.eq(null);
+    expect(JSON.stringify(result.error)).to.contain('"Custom":6018');
     expect(await balances()).deep.eq(before);
     proof.failedSlippage = result;
     record("slippage_failure", result.signature);

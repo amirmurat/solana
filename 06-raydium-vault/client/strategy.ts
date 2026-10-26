@@ -69,7 +69,7 @@ export async function configure(
       tokenProgram: TOKEN_PROGRAM_ID,
       systemProgram: SystemProgram.programId,
     })
-    .rpc();
+    .rpc({ commitment: "confirmed", preflightCommitment: "confirmed" });
 }
 export async function control(
   p: Program<RaydiumVault>,
@@ -81,7 +81,7 @@ export async function control(
   const a = await strategyAccounts(p, provider, mint);
   return (start ? p.methods.startStrategy() : p.methods.settleStrategy())
     .accountsStrict(a)
-    .rpc();
+    .rpc({ commitment: "confirmed", preflightCommitment: "confirmed" });
 }
 export async function vaultSwap(
   p: Program<RaydiumVault>,
@@ -134,7 +134,10 @@ export async function vaultSwap(
     .preInstructions([budget()]);
   if (!forceBadMinimum)
     return {
-      signature: await method.rpc(),
+      signature: await method.rpc({
+        commitment: "confirmed",
+        preflightCommitment: "confirmed",
+      }),
       expected: quote.amountCalculated.toString(),
       minimum: minOut.toString(),
     };
@@ -273,7 +276,7 @@ export async function openPosition(
     .remainingAccounts([{ pubkey: bitmap, isSigner: false, isWritable: true }])
     .signers([nft])
     .preInstructions([budget()])
-    .rpc();
+    .rpc({ commitment: "confirmed", preflightCommitment: "confirmed" });
   return {
     signature,
     position: {
@@ -346,5 +349,5 @@ export async function managePosition(
     })
     .remainingAccounts([{ pubkey: bitmap, isSigner: false, isWritable: true }])
     .preInstructions([budget()])
-    .rpc();
+    .rpc({ commitment: "confirmed", preflightCommitment: "confirmed" });
 }
