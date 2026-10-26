@@ -1,0 +1,15 @@
+{
+  "commit": "dbf04baabef2d68cb74f419efce1b5a8f9790ba9",
+  "runs": [
+    40284278956,
+    40284272511
+  ],
+  "conclusion": "success",
+  "artifact": 12632859851,
+  "artifactSha256": "728d56692271efd75ab06e151545673e45333dacf9d997ed6c7086f860c6b18d",
+  "rust": 15,
+  "inheritedIntegration": 48,
+  "raydiumIntegration": 16,
+  "cluster": "localnet",
+  "devnetComplete": false
+}

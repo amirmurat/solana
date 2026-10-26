@@ -1,0 +1,32 @@
+{
+  "name": "raydium-vault",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "test": "ts-mocha -p tsconfig.json -t 60000 tests/**/*.ts",
+    "typecheck": "tsc --noEmit",
+    "raydium:test": "node -r ts-node/register node_modules/mocha/bin/mocha.js -t 180000 integration/**/*.ts",
+    "week11": "ts-node scripts/week11.ts",
+    "course:local": "bash scripts/test-raydium-local.sh",
+    "course:devnet": "bash scripts/course-devnet.sh"
+  },
+  "dependencies": {
+    "@coral-xyz/anchor": "0.31.1",
+    "@solana/web3.js": "1.98.4",
+    "@solana/spl-token": "0.4.14",
+    "@raydium-io/raydium-sdk-v2": "0.2.70-alpha",
+    "decimal.js": "10.6.0",
+    "bn.js": "5.2.2"
+  },
+  "devDependencies": {
+    "@types/chai": "4.3.20",
+    "@types/mocha": "10.0.10",
+    "@types/node": "22.15.30",
+    "chai": "4.5.0",
+    "mocha": "10.8.2",
+    "ts-mocha": "10.1.0",
+    "ts-node": "10.9.2",
+    "typescript": "5.8.3",
+    "@types/bn.js": "5.1.6"
+  }
+}

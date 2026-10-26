@@ -1,0 +1,64 @@
+
+> raydium-vault@0.1.0 raydium:test
+> node -r ts-node/register node_modules/mocha/bin/mocha.js -t 180000 integration/**/*.ts
+
+(node:20044) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/runner/work/solana/solana/06-raydium-vault/integration/raydium.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /home/runner/work/solana/solana/06-raydium-vault/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+  W11–W13 with the official Raydium CLMM program
+<SDK transaction serialization omitted; see JSON signatures>
+<SDK transaction serialization omitted; see JSON signatures>
+    ✔ W11 records own pool, tokens and manual liquidity position
+    ✔ rejects configuration by a non-admin without creating the reserve
+    ✔ pins the pool pair and creates the PDA secondary reserve (393ms)
+    ✔ locks user deposits and withdrawals during the strategy cycle (422ms)
+    ✔ W12 records an on-chain slippage failure and rolls back balances (397ms)
+    1) W12 swaps base to the second token and records price impact
+    ✔ prevents settlement while secondary-token assets remain
+    2) W13 opens a vault-owned NFT position and revokes temporary delegates
+    ✔ blocks non-admin position operations and settlement with a live position
+<SDK transaction serialization omitted; see JSON signatures>
+<SDK transaction serialization omitted; see JSON signatures>
+<SDK transaction serialization omitted; see JSON signatures>
+    ✔ generates trading fees from an independent wallet (1187ms)
+    ✔ collects nonzero fees into vault accounts (412ms)
+<SDK transaction serialization omitted; see JSON signatures>
+<SDK transaction serialization omitted; see JSON signatures>
+<SDK transaction serialization omitted; see JSON signatures>
+<SDK transaction serialization omitted; see JSON signatures>
+<SDK transaction serialization omitted; see JSON signatures>
+<SDK transaction serialization omitted; see JSON signatures>
+    ✔ moves the pool price outside the first vault range (2432ms)
+    ✔ closes the first position and returns both assets (413ms)
+    ✔ rebalances by opening and closing a new position around the new price (842ms)
+    ✔ swaps all secondary assets back and settles realised NAV (777ms)
+    ✔ withdraws the final user shares and leaves no tracked assets or share supply (407ms)
+
+
+  14 passing (17s)
+  2 failing
+
+  1) W11–W13 with the official Raydium CLMM program
+       W12 swaps base to the second token and records price impact:
+
+      AssertionError: expected true to be false
+      + expected - actual
+
+      -true
+      +false
+
+      at Context.<anonymous> (integration/raydium.ts:291:55)
+      at processTicksAndRejections (node:internal/process/task_queues:103:5)
+
+  2) W11–W13 with the official Raydium CLMM program
+       W13 opens a vault-owned NFT position and revokes temporary delegates:
+
+  TokenAccountNotFoundError
+      at unpackAccount (node_modules/@solana/spl-token/src/state/account.ts:170:22)
+      at /home/runner/work/solana/solana/06-raydium-vault/node_modules/@solana/spl-token/src/state/account.ts:103:12
+      at Generator.next (<anonymous>)
+      at fulfilled (node_modules/@solana/spl-token/lib/cjs/state/account.js:5:58)
+      at processTicksAndRejections (node:internal/process/task_queues:103:5)

@@ -1,0 +1,214 @@
+{
+  "checks": [
+    "own_pool_and_manual_position",
+    "configure_admin_only",
+    "configure_pool",
+    "strategy_lock",
+    "slippage_failure",
+    "vault_swap",
+    "no_premature_settlement",
+    "open_vault_position",
+    "position_admin_only",
+    "external_swap",
+    "external_swap",
+    "external_swap",
+    "fees_generated",
+    "collect_fees",
+    "rebalance_external_swap",
+    "rebalance_external_swap",
+    "rebalance_external_swap",
+    "rebalance_external_swap",
+    "rebalance_external_swap",
+    "price_outside_range",
+    "close_first_position",
+    "rebalance_position",
+    "swap_back",
+    "settle_nav",
+    "final_withdrawal"
+  ],
+  "transactions": [
+    {
+      "action": "configure_pool",
+      "signature": "2RKbQecRNGtPKep4iz96j26wH8UFXjApHvaLj8A29hsDJx6A53dxZuvz2APB6vnbvZexDq9WP6ZuQi1RyMDvjfUk"
+    },
+    {
+      "action": "strategy_lock",
+      "signature": "3QabeajzBqipCRo8aBsYiQszHd6Ry1g79znBQ7u7JJJuXGxx9TBxSVC4CvXEBVv1xqeHoENDoUPuHeQmcrU8t85W"
+    },
+    {
+      "action": "slippage_failure",
+      "signature": "5GAjKibc6Guean8J4ynCUPmjoVD9ZM1kt1qCoYS3zABsJPE7zDbHsUXqkce8xXUoeyKF6zt4nV4DNYicu8eZqP7v"
+    },
+    {
+      "action": "vault_swap",
+      "signature": "4xb8iUpkDhVDN1qodZqc4EWkTywYqcj7HkCwjtkdMP4XFqVciipFExLYEJT6MPrCWire3o62y37zXkzKZRP5zKMB"
+    },
+    {
+      "action": "open_vault_position",
+      "signature": "kxBZ2UgrQbiPh95YDZARoMbjy2HNHm3e7WbfAhcE9HTmC3qgYfJKn4YtY8heGVjL35AZrYwvULDVScNtrh2S9dB"
+    },
+    {
+      "action": "external_swap",
+      "signature": "4KmTT9GJjnhA2nsT4SBSV9hX8FZuGwJCSLXeAxg28B7gFnrJseP9gXnECWDjDiLqm418FtQwbXozqorNJUihnCcd"
+    },
+    {
+      "action": "external_swap",
+      "signature": "5NPA8XKkQYrveggCQ5DYKvR2ZbWV61zP5XCXU3AmwinUaH6ZmHMrJfth2eSpcPVB5SG66mRTb3aNqgKyquFTcotr"
+    },
+    {
+      "action": "external_swap",
+      "signature": "2ha539FaNoGDj8bRvfihQ5ehj5zN7ziPAJaEfTmpnGPJ9J83KutsdGqZrzJbY5NrCQYZvCjDqri8Kd16F15TqdBU"
+    },
+    {
+      "action": "collect_fees",
+      "signature": "HSvHygZvFtQdz8nN8QG21YVBQicyz1HoMLwq5WhE1UYGWBS2vqhZPZbZ1bu6C4x3xHhBq9ZpJ4QxtEpiv57Uszw"
+    },
+    {
+      "action": "rebalance_external_swap",
+      "signature": "59X8YMKBmCHaPhFjx18TJz491fu5xEzuqHULHNmD6yRUkKqsnWcxfVhqdVFXMhqBvRM4Uz4C6brvTLqCajZg7djS"
+    },
+    {
+      "action": "rebalance_external_swap",
+      "signature": "5FQJLqmPzKXtrPUdjnnt8efAMoCnpBFmZQ4sSoCgy6soiQn8mTyX6bnMi5jNNkt7FFwZJQTV6aEDaWfkeAUnWVzt"
+    },
+    {
+      "action": "rebalance_external_swap",
+      "signature": "2jFsjQZsPvFKAJr9cEsZ3gpHqrw1X5VuHFq3zC96hi4rDWUC7Q6SKhjgAPC5LYBnJHFD1xSU2GXwzaKutRDDK9s9"
+    },
+    {
+      "action": "rebalance_external_swap",
+      "signature": "Z68zazcLopcmFbMUbLVUrLy7BQTEHQGCvdmVXww41sgf3QYEkx2dgbhyMgkQ3rPhshLrv3zWE7Fx9exkQWdS64U"
+    },
+    {
+      "action": "rebalance_external_swap",
+      "signature": "53nKQbDRoeb24J4yGBSG7wnV4nccVe8oTz8mo8UoDhgdWRZKyBqNryLWHpAwDpKe1CBmyTKyr6SWisSTnft9yey5"
+    },
+    {
+      "action": "close_first_position",
+      "signature": "5k6ucpNPSEaJ7Baob4ZaVxBaRmpqkoVnaV7gg3Y3FxYFaPfs29LGsRZFcdac1F9WRaiRPNqgVQ5NaSoSwLLNS5WK"
+    },
+    {
+      "action": "rebalance_position",
+      "signature": "2Rvn8c4MuTWaAE56pCVYTyS51bt7weifWy4rsiNrPVV2yHwYiaoFTCurQMiteMZDcseL6x5yA1z9Lchx3ZtVKX2i"
+    },
+    {
+      "action": "close_rebalanced_position",
+      "signature": "54KnKfHksc1LYdHA5sjhqJ9sdavZRf3nHJWW8p41K1aZCSkf62pQMWWMQ6RDsLv7vQZT3Xn4RjDfQnpLCUVxQFnV"
+    },
+    {
+      "action": "swap_back",
+      "signature": "3btvfcoJJVMH3yBpUV3UxJZ4kQU8hDV1T1bGDDnKHAVqkthmjzDQ9uvVRGZkia2RavTCYdQqVwYm2cDVBYw97h32"
+    },
+    {
+      "action": "settle_nav",
+      "signature": "64cLbsXJenrt3y4yYuATqoUq5Jppg7G5QfHaf263jFHdjbgLSSgdJCNyXmyKEsChanNtvVvB85gV8muDRDVjvSPa"
+    },
+    {
+      "action": "final_withdrawal",
+      "signature": "4ZvEtF9SAeqCaiEDH1u7oB9cerU5NaUYE4ctThfL3jhFn1QzL2dGswp5mqWXfAKzixzkH5P56fSvMkcPui7qhjkb"
+    }
+  ],
+  "cluster": "localnet",
+  "programId": "A67BpYQeXu7o4VA4Mi9u96VLDZpHWsYojo1dWLb3a7Pc",
+  "week11": {
+    "cluster": "localnet",
+    "pool": "CKEx9erKRDa5uAAEkAXr1cjhGu4D69qF9AVYp2uSheMR",
+    "mintA": "3uNEV2Gjmn7zd8uZSDRLPRd9RMhx1TJ59VvEZw4QuQhs",
+    "mintB": "HZutTWWH2YrUKBx1qe3Rk3L5UsQ3WgJ4ZLCBXBx2WUqE",
+    "manualNft": "GcnNgn8bNWqoY8tDxzkPNt1MVsqWEBPCvv1gusaGuGX8",
+    "manualLower": -1080,
+    "manualUpper": 900,
+    "initialPrice": "1",
+    "lowerPrice": "0.89763244330945058506",
+    "upperPrice": "1.0941693602602064192",
+    "signatures": [
+      "2qSuDjk2EDR13YMVJ6bHTVm28w7C9V6hSu7YPgUTmwiXynfhwxNoPzdrgKsdh8w8PP3ntmTThwyvXYKnpyyFMw9e",
+      "3JBJRqitkohfLxUEu5NrizEcGWm6YMBF4YeVhZtZgcNQKN4fBfgkQrGpQUezhwxxyuh6zgVqHtkz2vAPAokCYjWh"
+    ]
+  },
+  "failedSlippage": {
+    "signature": "5GAjKibc6Guean8J4ynCUPmjoVD9ZM1kt1qCoYS3zABsJPE7zDbHsUXqkce8xXUoeyKF6zt4nV4DNYicu8eZqP7v",
+    "expected": "398929963",
+    "minimum": "18446744073709551615",
+    "error": {
+      "InstructionError": [
+        1,
+        {
+          "Custom": 6018
+        }
+      ]
+    }
+  },
+  "swap": {
+    "signature": "4xb8iUpkDhVDN1qodZqc4EWkTywYqcj7HkCwjtkdMP4XFqVciipFExLYEJT6MPrCWire3o62y37zXkzKZRP5zKMB",
+    "expected": "398929963",
+    "minimum": "394940663",
+    "priceBefore": 1,
+    "priceAfter": 0.9996489695126828
+  },
+  "firstPosition": {
+    "signature": "kxBZ2UgrQbiPh95YDZARoMbjy2HNHm3e7WbfAhcE9HTmC3qgYfJKn4YtY8heGVjL35AZrYwvULDVScNtrh2S9dB",
+    "position": {
+      "nft": "7gz4Zwa8vWSNYYzzkYokuvdxU56oHJhMZNdB3LazL7Vs",
+      "lower": -240,
+      "upper": 180
+    },
+    "price": "0.9996489695126828",
+    "lowerPrice": "0.97628688122337429447",
+    "upperPrice": "1.0181620601046065365",
+    "maxA": "281863439",
+    "maxB": "362627336"
+  },
+  "collectedFees": {
+    "base": "55709",
+    "secondary": "27854"
+  },
+  "outOfRange": {
+    "tick": 203,
+    "oldUpper": 180,
+    "price": 1.0205746816477888
+  },
+  "firstClose": {
+    "before": {
+      "base": "310982998",
+      "secondary": "39920851",
+      "totalTokens": "990000000",
+      "totalShares": "990000000",
+      "locked": true,
+      "position": "7gz4Zwa8vWSNYYzzkYokuvdxU56oHJhMZNdB3LazL7Vs"
+    },
+    "after": {
+      "base": "310982998",
+      "secondary": "681124501",
+      "totalTokens": "990000000",
+      "totalShares": "990000000",
+      "locked": true,
+      "position": "11111111111111111111111111111111"
+    }
+  },
+  "rebalanced": {
+    "lower": -120,
+    "upper": 480,
+    "price": "1.0205746816477888",
+    "openSignature": "2Rvn8c4MuTWaAE56pCVYTyS51bt7weifWy4rsiNrPVV2yHwYiaoFTCurQMiteMZDcseL6x5yA1z9Lchx3ZtVKX2i"
+  },
+  "settled": {
+    "base": "976510670",
+    "secondary": "0",
+    "totalTokens": "976510670",
+    "totalShares": "990000000",
+    "locked": false,
+    "position": "11111111111111111111111111111111"
+  },
+  "final": {
+    "base": "0",
+    "secondary": "0",
+    "totalTokens": "0",
+    "totalShares": "0",
+    "locked": false,
+    "position": "11111111111111111111111111111111"
+  },
+  "finished": "2026-10-26T07:12:45.058Z",
+  "passedTests": 16,
+  "allPassed": true
+}

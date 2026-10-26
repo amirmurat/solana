@@ -1,19 +1,12 @@
-# Published material: Weeks 10–13
+# Weeks 10–13 course coverage
 
-Checked on 25 October 2026.
+Original guide supplied 25 October 2026 resolves the weekly mapping:
 
-| Source | Confirmed content | Week mapping |
+| Week | Required result | Implementation |
 |---|---|---|
-| Teacher `students-vault-card` branch, commit `38db796` | W8 cards and W9 deposits/shares | Explicit W9 label |
-| Teacher `main`, commit `57eab487` | SPL withdrawal; Raydium CLMM open/close via CPI; position script | README/code do not assign these features to each of W10–W13 |
-| Course requirements summary | W10 withdraw/CPI; W11–W13 Raydium/AMM/CLMM | Summary only; original W8–W15 guide is needed for precise deliverables |
+| 10 | Share burn, PDA-authorized redemption; Devnet CPI explanation | `05-withdrawal-vault`, isolated W10 branch |
+| 11 | Two own SPL tokens, own CLMM pool, manual seed position | `06-raydium-vault/scripts/clmm.ts` |
+| 12 | Admin-only vault swap, slippage, success/failure signatures, price change | `strategy::swap`, client and integration scenario |
+| 13 | Vault-owned NFT position, fee collection, closure, out-of-range rebalance | `strategy::open/manage`, client and integration scenario |
 
-References:
-- https://github.com/0xnurda/vault-dev/tree/students-vault-card
-- https://github.com/0xnurda/vault-dev/tree/57eab487680d0b322e214d827b55054b58b9bda7
-
-`05-withdrawal-vault` extends W9 with withdrawal and the teacher README's three-user full-redemption exercise. The original W8 and W9 projects are preserved.
-
-Weeks 11–13 are not claimed completed. Before integrating Raydium, confirm the original weekly exercise text, required AMM/CLMM operations, target Devnet pool/token pair, slippage bounds, position lifecycle and required demonstration/evidence. The teacher's existing main is a reference, not proof of each week's individual completion.
-
-A safe integration also needs to account for vault assets deployed into liquidity: liquid reserve balance is no longer the whole backing of shares. Do not simply copy open/close CPI into the deposit/withdraw program while continuing to price shares from liquid reserve alone. Pool/account/mint relationships and NFT position ownership need validation and real integration tests.
+Code and automated verification are distinct from Devnet submission evidence. The guide explicitly requires Devnet. The new project isolates W8/W9/W10 source and deployments; main is not changed. Refer to `06-raydium-vault/REPORT.md` for actual validation and remaining work.

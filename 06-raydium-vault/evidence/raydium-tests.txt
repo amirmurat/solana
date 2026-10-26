@@ -1,0 +1,42 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> raydium-vault@0.1.0 raydium:test
+> node -r ts-node/register node_modules/mocha/bin/mocha.js -t 180000 integration/**/*.ts
+
+bigint: Failed to load bindings, pure JS will be used (try npm run rebuild?)
+(node:679) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file://<project>/integration/raydium.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to <project>/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+  W11–W13 with the official Raydium CLMM program
+<SDK transaction serialization omitted; see JSON signatures>
+<SDK transaction serialization omitted; see JSON signatures>
+    ✔ W11 records own pool, tokens and manual liquidity position
+    ✔ rejects configuration by a non-admin without creating the reserve
+    ✔ pins the pool pair and creates the PDA secondary reserve (393ms)
+    ✔ locks user deposits and withdrawals during the strategy cycle (437ms)
+    ✔ W12 records an on-chain slippage failure and rolls back balances (385ms)
+    ✔ W12 swaps base to the second token and records price impact (406ms)
+    ✔ prevents settlement while secondary-token assets remain
+    ✔ W13 opens a vault-owned NFT position and revokes temporary delegates (395ms)
+    ✔ blocks non-admin position operations and settlement with a live position
+<SDK transaction serialization omitted; see JSON signatures>
+<SDK transaction serialization omitted; see JSON signatures>
+<SDK transaction serialization omitted; see JSON signatures>
+    ✔ generates trading fees from an independent wallet (1194ms)
+    ✔ collects nonzero fees into vault accounts (411ms)
+<SDK transaction serialization omitted; see JSON signatures>
+<SDK transaction serialization omitted; see JSON signatures>
+<SDK transaction serialization omitted; see JSON signatures>
+<SDK transaction serialization omitted; see JSON signatures>
+<SDK transaction serialization omitted; see JSON signatures>
+    ✔ moves the pool price outside the first vault range (2029ms)
+    ✔ closes the first position and returns both assets (414ms)
+    ✔ rebalances by opening and closing a new position around the new price (811ms)
+    ✔ swaps all secondary assets back and settles realised NAV (818ms)
+    ✔ withdraws the final user shares and leaves no tracked assets or share supply (406ms)
+
+
+  16 passing (16s)
