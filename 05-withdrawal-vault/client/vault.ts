@@ -161,6 +161,7 @@ export async function withdraw(
     .withdraw(new BN(shares.toString()), new BN(minTokensOut.toString()))
     .accountsStrict({
       vaultState: a.vaultState,
+      userCard: a.userCard,
       vaultTokenAccount: a.vaultTokenAccount,
       shareMint: a.shareMint,
       userTokenAccount,

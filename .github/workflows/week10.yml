@@ -2,7 +2,7 @@ name: Week 10 vault checks
 on:
   workflow_dispatch:
   push:
-    branches: [week10-withdrawals]
+    branches: [week10-withdrawals, week10-current-assignment]
     paths: ['05-withdrawal-vault/**', '.github/workflows/week10.yml']
   pull_request:
     paths: ['05-withdrawal-vault/**', '.github/workflows/week10.yml']

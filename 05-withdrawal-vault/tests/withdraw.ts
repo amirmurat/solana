@@ -34,6 +34,7 @@ import {
   pause,
   checkNetwork,
   deposit,
+  closeCard,
 } from "../client/vault";
 
 describe("W10 withdrawals: burn + PDA transfer", () => {
@@ -55,6 +56,7 @@ describe("W10 withdrawals: burn + PDA transfer", () => {
   function accounts(i: number) {
     return {
       vaultState: a.vaultState,
+      userCard: addresses(p, mint, keys[i].publicKey).userCard,
       vaultTokenAccount: a.vaultTokenAccount,
       shareMint: a.shareMint,
       userTokenAccount: sources[i],
@@ -254,7 +256,7 @@ describe("W10 withdrawals: burn + PDA transfer", () => {
     );
     await pause(p, provider, mint, false);
   });
-  it("redeems transferred shares without requiring the recipients UserCard", async () => {
+  it("requires a card before redeeming transferred shares", async () => {
     await transfer(
       provider.connection,
       payer,
@@ -268,6 +270,8 @@ describe("W10 withdrawals: burn + PDA transfer", () => {
         addresses(p, mint, keys[3].publicKey).userCard,
       ),
     ).eq(null);
+    await fails(() => redeem(3, 1_000_000));
+    await createCard(programs[3], providers[3], mint);
     signatures.push(await redeem(3, 1_000_000, 1_000_000));
     expect((await getAccount(provider.connection, sources[3])).amount).eq(
       1_000_000n,
@@ -277,7 +281,12 @@ describe("W10 withdrawals: burn + PDA transfer", () => {
     for (let i = 0; i < 3; i++) {
       const balance = (await getAccount(provider.connection, destinations[i]))
         .amount;
-      signatures.push(await redeem(i, balance));
+      const cardBefore = await p.account.userCard.fetch(accounts(i).userCard);
+      expect(cardBefore.shares.gte(new BN(0))).eq(true);
+      signatures.push(await programs[i].methods.withdrawAll(new BN(0)).accountsStrict(accounts(i)).rpc());
+      const cardAfter = await p.account.userCard.fetch(accounts(i).userCard);
+      expect(cardAfter.shares.toString()).eq("0");
+      expect(cardAfter.deposited.toString()).eq("0");
       expect(
         (await getAccount(provider.connection, destinations[i])).amount,
       ).eq(0n);
@@ -317,6 +326,18 @@ describe("W10 withdrawals: burn + PDA transfer", () => {
   });
   it("rejects a withdrawal from an empty vault", async () => {
     await fails(() => redeem(0, 1), "InsufficientShares");
+  });
+  it("closes a redeemed card, refunds rent and permits recreation", async () => {
+    const card = accounts(1).userCard;
+    const rent = (await provider.connection.getAccountInfo(card))!.lamports;
+    const before = await provider.connection.getBalance(keys[1].publicKey);
+    await closeCard(programs[1], providers[1], mint);
+    expect(await provider.connection.getAccountInfo(card)).eq(null);
+    const after = await provider.connection.getBalance(keys[1].publicKey);
+    expect(after).greaterThan(before);
+    expect(after - before).lessThanOrEqual(rent);
+    await createCard(programs[1], providers[1], mint);
+    expect((await p.account.userCard.fetch(card)).shares.toString()).eq("0");
   });
   it("supports a fresh first deposit after the last redemption", async () => {
     await deposit(

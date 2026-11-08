@@ -134,8 +134,21 @@ pub mod w10_vault {
         let vault = &mut ctx.accounts.vault_state;
         vault.total_tokens = tokens_after;
         vault.total_shares = shares_after;
+        let card = &mut ctx.accounts.user_card;
+        card.deposited = card.deposited.saturating_sub(tokens_out);
+        card.shares = card.shares.saturating_sub(shares_amount);
+        // A full redemption ends this card's position, including transferred shares.
+        if shares_amount == ctx.accounts.user_share_account.amount {
+            card.deposited = 0;
+            card.shares = 0;
+        }
         emit!(Withdrawn {user: ctx.accounts.user.key(), shares: shares_amount, tokens: tokens_out});
         Ok(())
+    }
+
+    pub fn withdraw_all(ctx: Context<Withdraw>, min_tokens_out: u64) -> Result<()> {
+        let shares = ctx.accounts.user_share_account.amount;
+        withdraw(ctx, shares, min_tokens_out)
     }
 
     pub fn set_paused(ctx: Context<SetPaused>, paused: bool) -> Result<()> {
@@ -459,6 +472,9 @@ pub struct Withdraw<'info> {
     #[account(mut, seeds = [b"vault", vault_state.token_mint.as_ref()], bump = vault_state.bump,
         has_one = vault_token_account, has_one = share_mint)]
     pub vault_state: Account<'info, VaultState>,
+    #[account(mut, seeds = [b"user_card", vault_state.key().as_ref(), user.key().as_ref()],
+        bump = user_card.bump)]
+    pub user_card: Account<'info, UserCard>,
     #[account(mut, seeds = [b"vault_tokens", vault_state.token_mint.as_ref()], bump,
         token::mint = vault_state.token_mint, token::authority = vault_state)]
     pub vault_token_account: Account<'info, TokenAccount>,
