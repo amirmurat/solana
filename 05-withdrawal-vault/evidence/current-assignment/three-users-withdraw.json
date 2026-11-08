@@ -1,0 +1,27 @@
+{
+  "cluster": "http://127.0.0.1:8899",
+  "programId": "CQCeERPQw6wkP3pPWatDdaGHgrHVTEEGUhA9yhJye5XM",
+  "mint": "DDvN2r2A5Ed5gXZpLmgNm2YprTw3mqjnt8ySngj8szk8",
+  "signatures": [
+    "HDUiVpe2HZUmF7LRyqVmU3qA1HNoxSgVR614U9WBfcEnjSiVibT6J5vPLHtoEwuCReoazksm4aPSDEdLreo3f3i",
+    "nTzgWfjHaPAwku1gFDEfraskusQJ729n8DJ7ko4bAbEcwDwWKd4u5ojCF6TsvUpkLyY4KPk47qqgAUCwLCSr6By",
+    "2kENXT5gEQMNK3F9AqNtPVkkpfDm68vGh83jxLMZjEb2HcDyPt6ewJ7daGDGaMet6FdkfXv9WQgyGp5oxXgkWf5u",
+    "4H8DzjUjdGpGqGmqjafPNJ57L68zvSg3WdK2wUtmcz9eC7bZPCFpDmvEAtB4yHmwXcLNDeS8m29bSvXaPv8QS5sf",
+    "5Nkb3GR6jMvz7kue2r4kaDYcThmjFqGsi1mQHntvrQz6q2cNncp2rhXLDdP8T3PSmKrR9UL3neJUf9frF8KttRio"
+  ],
+  "result": {
+    "source": "498000000",
+    "balance": "0",
+    "reserve": "0",
+    "supply": "0",
+    "tokens": "0",
+    "shares": "0",
+    "fee": "1750000"
+  },
+  "finalUnderlyingBalances": [
+    "498000000",
+    "499500000",
+    "499750000",
+    "1000000"
+  ]
+}
