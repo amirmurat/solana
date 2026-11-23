@@ -1,6 +1,9 @@
 use anchor_lang::prelude::*;
 use anchor_spl::token::{self, Burn, Mint, MintTo, Token, TokenAccount, Transfer};
 
+pub mod raydium;
+use raydium::*;
+
 declare_id!("F4owJE4EFYLhcBnbPLHrwsuKLuLFFDnyYKAgARaJZaAx");
 
 #[program]
@@ -29,6 +32,8 @@ pub mod clmm_vault {
     /// Gross amount is debited once: 1% floor fee + net deposit.
     pub fn deposit(ctx: Context<Deposit>, amount: u64) -> Result<()> {
         let v = &ctx.accounts.vault_state;
+        // Weeks 12-13: while funds are in TOKEN_B / a position, total_tokens is not the vault value
+        require!(!v.in_market, VaultError::InMarket);
         require!(!v.paused, VaultError::VaultPaused);
         require!(amount > 0, VaultError::ZeroAmount);
         require!(amount >= v.min_deposit, VaultError::BelowMinimum);
@@ -111,6 +116,7 @@ pub mod clmm_vault {
     /// Withdrawals stay available while deposits are paused.
     pub fn withdraw(ctx: Context<Withdraw>, shares_amount: u64, min_tokens_out: u64) -> Result<()> {
         let vault = &ctx.accounts.vault_state;
+        require!(!vault.in_market, VaultError::InMarket);
         require!(ctx.accounts.share_mint.supply == vault.total_shares, VaultError::InvalidAccounting);
         require!(ctx.accounts.vault_token_account.amount >= vault.total_tokens, VaultError::InvalidAccounting);
         require!(shares_amount <= ctx.accounts.user_share_account.amount, VaultError::InsufficientShares);
@@ -171,6 +177,28 @@ pub mod clmm_vault {
 
         msg!("User card created for: {}", card.owner);
         Ok(())
+    }
+
+    // ─── Week 12: Raydium CLMM (code in raydium.rs) ─────────────────────────
+
+    /// Admin sets the second token of the pool pair (TOKEN_B) once.
+    pub fn add_pair_token(ctx: Context<AddPairToken>) -> Result<()> {
+        raydium::add_pair_token(ctx)
+    }
+
+    /// Week 12. Admin swaps vault tokens through a Raydium CLMM pool (CPI swap_v2).
+    pub fn swap<'a, 'b, 'c: 'info, 'info>(
+        ctx: Context<'a, 'b, 'c, 'info, VaultSwap<'info>>,
+        amount_in: u64,
+        min_amount_out: u64,
+        a_to_b: bool,
+    ) -> Result<()> {
+        raydium::swap(ctx, amount_in, min_amount_out, a_to_b)
+    }
+
+    /// Back to normal mode once everything is TOKEN_A again.
+    pub fn sync_vault(ctx: Context<SyncVault>) -> Result<()> {
+        raydium::sync_vault(ctx)
     }
 }
 
@@ -269,10 +297,14 @@ pub struct VaultState {
     pub total_shares: u64,
     pub fee_wallet: Pubkey,
     pub min_deposit: u64,
+    // ─── weeks 12-13 ───
+    pub token_mint_b: Pubkey,          // 32 — second pool token, default = not set
+    pub vault_token_account_b: Pubkey, // 32 — PDA ["vault_tokens_b", token_mint]
+    pub in_market: bool,               // 1  — funds in TOKEN_B/position: deposit & withdraw blocked
 }
 
 impl VaultState {
-    pub const LEN: usize = 8 + 32 + 32 + 32 + 32 + 1 + 1 + 8 + 8 + 32 + 8;
+    pub const LEN: usize = 8 + 32 + 32 + 32 + 32 + 1 + 1 + 8 + 8 + 32 + 8 + 32 + 32 + 1;
 }
 
 /// Карточка пользователя в vault.
@@ -340,6 +372,13 @@ pub enum VaultError {
     #[msg("Withdrawal rounds to zero tokens")] WithdrawTooSmall,
     #[msg("User or vault has fewer shares than requested")] InsufficientShares,
     #[msg("Quoted tokens are below the user minimum")] SlippageExceeded,
+    // ─── weeks 12-13 ───
+    #[msg("Vault funds are in the market: deposit/withdraw paused until sync_vault")] InMarket,
+    #[msg("Pair token (TOKEN_B) is not set: call add_pair_token")] PairNotSet,
+    #[msg("Pair token must differ from vault token")] SameToken,
+    #[msg("Pool does not match vault token pair")] WrongPool,
+    #[msg("Cannot sync: vault still holds TOKEN_B, swap it back to TOKEN_A first")] TokenBNotZero,
+    #[msg("One swap may sell at most 50% of the vault's TOKEN_A")] SwapTooLarge,
 }
 
 /// Integer-only quote. Rounding is down, never issue unbacked fractional shares.
@@ -446,7 +485,7 @@ mod tests {
     }
     #[test]
     fn sizes() {
-        assert_eq!(VaultState::LEN, 194);
+        assert_eq!(VaultState::LEN, 259);
         assert_eq!(UserCard::LEN, 97);
     }
 }
