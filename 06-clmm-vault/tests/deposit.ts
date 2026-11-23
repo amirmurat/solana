@@ -177,7 +177,7 @@ describe("W10 inherited deposits: actual SPL CPIs", () => {
     expect(v.feeWallet.equals(fee)).true;
     expect(
       (await provider.connection.getAccountInfo(a.vaultState))!.data.length,
-    ).eq(259);
+    ).eq(307);
     expect(
       (await provider.connection.getAccountInfo(ac(0).userCard))!.data.length,
     ).eq(97);

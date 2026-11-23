@@ -14,6 +14,16 @@ References:
 
 `05-withdrawal-vault` extends W9 with withdrawal and the teacher README's three-user full-redemption exercise. The original W8 and W9 projects are preserved.
 
-Weeks 11–13 are not claimed completed. Before integrating Raydium, confirm the original weekly exercise text, required AMM/CLMM operations, target Devnet pool/token pair, slippage bounds, position lifecycle and required demonstration/evidence. The teacher's existing main is a reference, not proof of each week's individual completion.
+## Weeks 11–13 (assignments published later)
 
-A safe integration also needs to account for vault assets deployed into liquidity: liquid reserve balance is no longer the whole backing of shares. Do not simply copy open/close CPI into the deposit/withdraw program while continuing to price shares from liquid reserve alone. Pool/account/mint relationships and NFT position ownership need validation and real integration tests.
+| Week | Teacher commit | Implementation |
+|---|---|---|
+| 11 — AMM and concentrated liquidity | [fe2adcf](https://github.com/0xnurda/vault-dev/commit/fe2adcf7385866e6f585e69e719979ba423640ec), 11 Nov 2026 | `06-clmm-vault/scripts/create-clmm-pool.ts` |
+| 12 — swap through Raydium | [26ac3a6](https://github.com/0xnurda/vault-dev/commit/26ac3a68d9b7a049fdf206af19b4f83a06820c13), 20 Nov 2026 | `06-clmm-vault`: `add_pair_token`, `swap`, `sync_vault`, extra task 7 |
+| 13 — position in a CLMM pool | same | `06-clmm-vault`: `open_position`, `increase_liquidity`, `collect_fees`, `close_position`, extra tasks 8–9 |
+
+The accounting concern below is handled as in the teacher's design: any swap or open position sets `in_market`, which blocks deposits and withdrawals; `sync_vault` re-prices shares from the real TOKEN_A balance only when TOKEN_B is zero and no position is open. See [06-clmm-vault/README.md](06-clmm-vault/README.md).
+
+The earlier `weeks11-13-raydium` branch (25 Oct 2026) predates these assignments and is kept as history.
+
+Original note (25 Oct 2026): a safe integration also needs to account for vault assets deployed into liquidity: liquid reserve balance is no longer the whole backing of shares. Do not simply copy open/close CPI into the deposit/withdraw program while continuing to price shares from liquid reserve alone. Pool/account/mint relationships and NFT position ownership need validation and real integration tests.

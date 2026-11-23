@@ -266,3 +266,7 @@ npm run mint
 ## Week 8 Vault card assignment
 
 [Completed official Week 8 assignment](03-liquidity-vault/README.md): created_at, owner-only closure with rent refund, admin pause; 16 integration tests and verified Devnet calls. [Defense notes](03-liquidity-vault/DEFENSE.md).
+
+## Weeks 11–13 Raydium CLMM vault
+
+[06-clmm-vault](06-clmm-vault/README.md): own tokens and CLMM pool (week 11), vault swap through Raydium (week 12), vault position with fees (week 13). Overview: [WEEKS-10-13.md](WEEKS-10-13.md).

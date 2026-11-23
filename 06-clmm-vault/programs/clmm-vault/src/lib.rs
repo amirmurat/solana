@@ -200,6 +200,57 @@ pub mod clmm_vault {
     pub fn sync_vault(ctx: Context<SyncVault>) -> Result<()> {
         raydium::sync_vault(ctx)
     }
+
+    // ─── Week 13: concentrated-liquidity position ───────────────────────────
+
+    /// Week 13. Admin opens the vault position in a price range; the NFT belongs to the vault PDA.
+    pub fn open_position<'a, 'b, 'c: 'info, 'info>(
+        ctx: Context<'a, 'b, 'c, 'info, VaultOpenPosition<'info>>,
+        tick_lower_index: i32,
+        tick_upper_index: i32,
+        tick_array_lower_start_index: i32,
+        tick_array_upper_start_index: i32,
+        amount_0_max: u64,
+        amount_1_max: u64,
+        base_0: bool,
+    ) -> Result<()> {
+        raydium::open_position(
+            ctx,
+            tick_lower_index,
+            tick_upper_index,
+            tick_array_lower_start_index,
+            tick_array_upper_start_index,
+            amount_0_max,
+            amount_1_max,
+            base_0,
+        )
+    }
+
+    /// Week 13, extra task 8. Admin adds vault tokens to the open position.
+    pub fn increase_liquidity<'a, 'b, 'c: 'info, 'info>(
+        ctx: Context<'a, 'b, 'c, 'info, VaultPosition<'info>>,
+        amount_0_max: u64,
+        amount_1_max: u64,
+        base_0: bool,
+    ) -> Result<()> {
+        raydium::increase_liquidity(ctx, amount_0_max, amount_1_max, base_0)
+    }
+
+    /// Week 13. Admin collects the position fees into the vault (counted in total_fees_a/b).
+    pub fn collect_fees<'a, 'b, 'c: 'info, 'info>(
+        ctx: Context<'a, 'b, 'c, 'info, VaultPosition<'info>>,
+    ) -> Result<()> {
+        raydium::collect_fees(ctx)
+    }
+
+    /// Week 13. Admin closes the position: everything returns to the vault, rent to the admin.
+    pub fn close_position<'a, 'b, 'c: 'info, 'info>(
+        ctx: Context<'a, 'b, 'c, 'info, VaultPosition<'info>>,
+        amount_0_min: u64,
+        amount_1_min: u64,
+    ) -> Result<()> {
+        raydium::close_position(ctx, amount_0_min, amount_1_min)
+    }
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -301,10 +352,13 @@ pub struct VaultState {
     pub token_mint_b: Pubkey,          // 32 — second pool token, default = not set
     pub vault_token_account_b: Pubkey, // 32 — PDA ["vault_tokens_b", token_mint]
     pub in_market: bool,               // 1  — funds in TOKEN_B/position: deposit & withdraw blocked
+    pub position_nft_mint: Pubkey,     // 32 — NFT of the open position (week 13), default = none
+    pub total_fees_a: u64,             // 8  — all position fees ever collected, TOKEN_A (extra task 9)
+    pub total_fees_b: u64,             // 8  — same in TOKEN_B
 }
 
 impl VaultState {
-    pub const LEN: usize = 8 + 32 + 32 + 32 + 32 + 1 + 1 + 8 + 8 + 32 + 8 + 32 + 32 + 1;
+    pub const LEN: usize = 8 + 32 + 32 + 32 + 32 + 1 + 1 + 8 + 8 + 32 + 8 + 32 + 32 + 1 + 32 + 8 + 8;
 }
 
 /// Карточка пользователя в vault.
@@ -379,6 +433,10 @@ pub enum VaultError {
     #[msg("Pool does not match vault token pair")] WrongPool,
     #[msg("Cannot sync: vault still holds TOKEN_B, swap it back to TOKEN_A first")] TokenBNotZero,
     #[msg("One swap may sell at most 50% of the vault's TOKEN_A")] SwapTooLarge,
+    #[msg("tick_lower must be less than tick_upper")] InvalidTickRange,
+    #[msg("Position is already open")] PositionAlreadyOpen,
+    #[msg("No open position")] NoOpenPosition,
+    #[msg("Cannot sync: position is still open, call close_position first")] PositionOpen,
 }
 
 /// Integer-only quote. Rounding is down, never issue unbacked fractional shares.
@@ -485,7 +543,7 @@ mod tests {
     }
     #[test]
     fn sizes() {
-        assert_eq!(VaultState::LEN, 259);
+        assert_eq!(VaultState::LEN, 307);
         assert_eq!(UserCard::LEN, 97);
     }
 }

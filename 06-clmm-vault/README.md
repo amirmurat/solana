@@ -6,6 +6,7 @@ Extends the Week 10 vault (`05-withdrawal-vault`: cards, 1% deposit fee, minimum
 |---|---|---|
 | 11 — AMM and concentrated liquidity | [fe2adcf](https://github.com/0xnurda/vault-dev/commit/fe2adcf7385866e6f585e69e719979ba423640ec) | `scripts/create-clmm-pool.ts` |
 | 12 — swap through Raydium | [26ac3a6](https://github.com/0xnurda/vault-dev/commit/26ac3a68d9b7a049fdf206af19b4f83a06820c13) | `add_pair_token`, `swap`, `sync_vault` in `src/raydium.rs` + extra task 7 |
+| 13 — position in a CLMM pool | [26ac3a6](https://github.com/0xnurda/vault-dev/commit/26ac3a68d9b7a049fdf206af19b4f83a06820c13) | `open_position`, `collect_fees`, `close_position` + extra tasks 8 (`increase_liquidity`) and 9 (fee counter) |
 
 The program was copied from Week 10 under a new name (`clmm_vault`) and a new program identity. The W8/W9/W10 programs are never upgraded (`scripts/deploy-devnet.sh` refuses their addresses).
 
@@ -89,3 +90,59 @@ On Devnet (deploy the program first, ~4 SOL for a ~500 KB program):
 ```bash
 ANCHOR_PROVIDER_URL=https://api.devnet.solana.com ANCHOR_WALLET=~/.config/solana/id.json npm run test:raydium
 ```
+
+## Week 13 — vault position with concentrated liquidity
+
+| Instruction | What it does |
+|---|---|
+| `open_position(tick_lower, tick_upper, tick_array_lower_start, tick_array_upper_start, amount_0_max, amount_1_max, base_0)` | Puts vault TOKEN_A/TOKEN_B into `[tick_lower, tick_upper]` (CPI `open_position_with_token22_nft`). Raydium computes liquidity from `amount_0_max` (`base_0`) or `amount_1_max`. Amounts are in **pool** order (token_0 = smaller mint address); the program works out which vault token is token_0. **The position NFT belongs to the vault PDA**; the admin pays rent. Raydium pulls tokens from the payer, so the program `approve`s the admin for at most `amount_*_max` on the vault accounts and `revoke`s right after. One position at a time (`PositionAlreadyOpen`). Sets `in_market`. |
+| `increase_liquidity(amount_0_max, amount_1_max, base_0)` | **Extra task 8.** CPI `increase_liquidity_v2` into the open position. Here Raydium pulls tokens from the NFT owner — the vault PDA, which signs — so no approval is needed. |
+| `collect_fees` | CPI `decrease_liquidity_v2` with liquidity 0: Raydium sends only the fees; liquidity stays. |
+| `close_position(amount_0_min, amount_1_min)` | Collects fees first, then withdraws all liquidity (mins protect the liquidity part, pool order) and closes the position. Raydium returns the rent to the vault PDA (NFT owner); the program moves every lamport above the `VaultState` minimum to the admin who paid it. |
+| `sync_vault` | Now also requires no open position (`PositionOpen`). |
+
+`collect_fees`/`close_position`/`increase_liquidity` accept only the vault's own position: `position_nft_mint` must equal `vault_state.position_nft_mint` and `personal_position` must belong to that NFT and pool (`NoOpenPosition`, `WrongPool`).
+
+**Extra task 9** — `VaultState.total_fees_a` / `total_fees_b`: every fee collection (in `collect_fees` and the fee step of `close_position`) measures how much TOKEN_A/TOKEN_B arrived and adds it. Because `close_position` collects fees separately before removing liquidity, the counter never mixes fees with returned principal.
+
+`VaultState` grows to 307 bytes (`position_nft_mint`, `total_fees_a`, `total_fees_b`).
+
+### Full scenario (`tests/raydium.ts`)
+
+```
+1. admin: own TOKEN_A / TOKEN_B, CLMM pool (price 1), wallet liquidity
+2. admin: initialize_vault(TOKEN_A), add_pair_token(TOKEN_B)
+3. user:  create_user_card, deposit 1000 A (990 after fee)
+4. admin: swap 300 A → B                       → in_market, deposit/withdraw paused
+5. admin: open_position (price 0.8 – 1.25), increase_liquidity (+50 token_0)
+6. wallet trades in the pool                   → the vault position earns fees
+7. admin: collect_fees (counter = received fees), close_position (rent → admin)
+8. admin: swap(all B → A) + sync_vault         → one transaction; total_tokens = real A balance
+9. user:  withdraw all shares                  → receives all TOKEN_A of the vault
+```
+
+A second vault (on TOKEN_B, pair TOKEN_A) checks that a single-token position opened without any swap also sets `in_market`, that `sync_vault` with an open position fails with `PositionOpen`, and that closing a position with no fees works.
+
+### Limits of this course version
+
+- Devnet only: `raydium-clmm-cpi` is built with the `devnet` feature; the CLMM program address is hard-wired.
+- The pool is not pinned to the vault: the admin may use any pool of the TOKEN_A / TOKEN_B pair. The admin is fully trusted (swap price, range, timing).
+- Pool rewards are not collected; with rewards enabled `close_position` fails in Raydium. One position at a time.
+- While `in_market`, users cannot exit; the admin must close the position and swap back.
+- Swaps cost 0.25%; a run can end with `total_tokens` below the deposits if the position earned less than the swap fees.
+
+## Errors
+
+| Error | Cause | Fix |
+|---|---|---|
+| `InMarket` on deposit / withdraw | funds in TOKEN_B or a position | admin: `close_position`, swap B → A, `sync_vault` |
+| `PositionOpen` on `sync_vault` | position still open | `close_position` first |
+| `TokenBNotZero` on `sync_vault` | TOKEN_B left on the vault | `swap(u64::MAX, …, false)` + `sync_vault` in one transaction |
+| `SwapTooLarge` | A → B over 50% of TOKEN_A | swap in smaller parts |
+| `WrongPool` | other pair or swapped pool vaults | check `poolState`, `inputVault` / `outputVault` |
+| `NoOpenPosition` | wrong NFT / `personal_position`, or no position | use the vault's own position |
+| `PositionAlreadyOpen` | a position is already open | `close_position` first |
+| `InvalidTickRange` | `tick_lower >= tick_upper` | swap the bounds |
+| `Unauthorized` | Raydium instruction signed by a non-admin | sign with the vault admin |
+| `TooLittleOutputReceived` | swap gave less than `min_amount_out` | lower `min_amount_out` or the amount |
+| `account data too small` on deploy | the program grew (~500 KB) | `solana program extend <PROGRAM_ID> 100000 --url devnet` |
