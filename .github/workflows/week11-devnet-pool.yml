@@ -1,0 +1,57 @@
+name: Week 11 Devnet CLMM pool
+# Creates the week 11 pool on the official Devnet with a throwaway CI wallet funded by the
+# Devnet airdrop, then commits 06-clmm-vault/pool-devnet.json. No personal keys are used.
+on:
+  workflow_dispatch:
+  push:
+    branches: [weeks11-13-current-assignment]
+    paths: ['.github/workflows/week11-devnet-pool.yml']
+permissions:
+  contents: write
+jobs:
+  devnet-pool:
+    runs-on: ubuntu-22.04
+    defaults:
+      run:
+        working-directory: 06-clmm-vault
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install --no-audit --no-fund
+      - name: Throwaway Devnet wallet + airdrop
+        run: |
+          mkdir -p "$RUNNER_TEMP/w" evidence
+          node -e '
+            const {Keypair,Connection,LAMPORTS_PER_SOL}=require("@solana/web3.js");const fs=require("fs");
+            (async()=>{
+              const kp=Keypair.generate();
+              fs.writeFileSync(process.env.RUNNER_TEMP+"/w/ci.json",JSON.stringify(Array.from(kp.secretKey)));
+              const c=new Connection("https://api.devnet.solana.com","confirmed");
+              console.log("CI wallet:",kp.publicKey.toBase58());
+              for(let i=0;i<12;i++){
+                const amt=i<6?1:0.5;
+                try{const sig=await c.requestAirdrop(kp.publicKey,amt*LAMPORTS_PER_SOL);
+                    const bh=await c.getLatestBlockhash();await c.confirmTransaction({signature:sig,...bh},"confirmed");}
+                catch(e){console.log("airdrop attempt",i+1,"failed:",String(e.message||e).slice(0,120));}
+                const bal=await c.getBalance(kp.publicKey);
+                if(bal>=0.3*LAMPORTS_PER_SOL){console.log("Balance:",bal/LAMPORTS_PER_SOL,"SOL");return;}
+                await new Promise(r=>setTimeout(r,20000));
+              }
+              throw new Error("Devnet airdrop failed (rate limit)");
+            })().catch(e=>{console.error(e.message);process.exit(1)});
+          '
+      - name: Create the pool on Devnet (week 11 script)
+        env:
+          ANCHOR_PROVIDER_URL: https://api.devnet.solana.com
+        run: |
+          ANCHOR_WALLET="$RUNNER_TEMP/w/ci.json" npm run create-pool 2>&1 | tee evidence/week11-devnet-create-pool.txt
+          test -f pool-devnet.json && cat pool-devnet.json
+      - name: Commit pool-devnet.json
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add pool-devnet.json evidence/week11-devnet-create-pool.txt
+          git commit -m "Week 11: Devnet CLMM pool $(node -p 'require(\"./pool-devnet.json\").poolId')"
+          git push origin HEAD:${GITHUB_REF_NAME}
