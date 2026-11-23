@@ -1,6 +1,7 @@
 name: Week 11 Devnet CLMM pool
-# Creates the week 11 pool on the official Devnet with a throwaway CI wallet funded by the
-# Devnet airdrop, then commits 06-clmm-vault/pool-devnet.json. No personal keys are used.
+# Creates the week 11 pool on the official Devnet with a throwaway Devnet-only wallet kept in the
+# repository secret DEVNET_CI_KEYPAIR (funded via faucet.solana.com), then commits
+# 06-clmm-vault/pool-devnet.json. The key is never committed or printed; no personal keys are used.
 on:
   workflow_dispatch:
   push:
@@ -20,26 +21,20 @@ jobs:
         with:
           node-version: '22'
       - run: npm install --no-audit --no-fund
-      - name: Throwaway Devnet wallet + airdrop
+      - name: Devnet wallet from the DEVNET_CI_KEYPAIR secret (throwaway, Devnet only)
+        env:
+          KEY: ${{ secrets.DEVNET_CI_KEYPAIR }}
         run: |
+          if [ -z "$KEY" ]; then echo "Secret DEVNET_CI_KEYPAIR is not set"; exit 1; fi
           mkdir -p "$RUNNER_TEMP/w" evidence
+          printf '%s' "$KEY" > "$RUNNER_TEMP/w/ci.json"
           node -e '
             const {Keypair,Connection,LAMPORTS_PER_SOL}=require("@solana/web3.js");const fs=require("fs");
             (async()=>{
-              const kp=Keypair.generate();
-              fs.writeFileSync(process.env.RUNNER_TEMP+"/w/ci.json",JSON.stringify(Array.from(kp.secretKey)));
-              const c=new Connection("https://api.devnet.solana.com","confirmed");
-              console.log("CI wallet:",kp.publicKey.toBase58());
-              for(let i=0;i<12;i++){
-                const amt=i<6?1:0.5;
-                try{const sig=await c.requestAirdrop(kp.publicKey,amt*LAMPORTS_PER_SOL);
-                    const bh=await c.getLatestBlockhash();await c.confirmTransaction({signature:sig,...bh},"confirmed");}
-                catch(e){console.log("airdrop attempt",i+1,"failed:",String(e.message||e).slice(0,120));}
-                const bal=await c.getBalance(kp.publicKey);
-                if(bal>=0.3*LAMPORTS_PER_SOL){console.log("Balance:",bal/LAMPORTS_PER_SOL,"SOL");return;}
-                await new Promise(r=>setTimeout(r,20000));
-              }
-              throw new Error("Devnet airdrop failed (rate limit)");
+              const kp=Keypair.fromSecretKey(Uint8Array.from(JSON.parse(fs.readFileSync(process.env.RUNNER_TEMP+"/w/ci.json","utf8"))));
+              const bal=await new Connection("https://api.devnet.solana.com","confirmed").getBalance(kp.publicKey);
+              console.log("CI wallet:",kp.publicKey.toBase58(),"balance:",bal/LAMPORTS_PER_SOL,"SOL");
+              if(bal<0.2*LAMPORTS_PER_SOL)throw new Error("Fund this address on https://faucet.solana.com (Devnet)");
             })().catch(e=>{console.error(e.message);process.exit(1)});
           '
       - name: Create the pool on Devnet (week 11 script)
