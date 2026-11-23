@@ -1,0 +1,27 @@
+[package]
+name = "clmm-vault"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.79"
+[lib]
+crate-type = ["cdylib", "lib"]
+name = "clmm_vault"
+[features]
+default = []
+cpi = ["no-entrypoint"]
+no-entrypoint = []
+no-idl = []
+no-log-ix-name = []
+idl-build = ["anchor-lang/idl-build", "anchor-spl/idl-build"]
+anchor-debug = []
+custom-heap = []
+custom-panic = []
+[dependencies]
+anchor-lang = { version = "=0.31.1", features = ["init-if-needed"] }
+anchor-spl = { version = "=0.31.1", features = ["memo"] }
+# Raydium CLMM CPI interface (weeks 12-13). The "devnet" feature hard-wires the
+# Devnet CLMM program DRayAUgENGQBKVaX8owNhgzkEDyoHTGVEGHVJT1E9pfH.
+raydium-clmm-cpi = { git = "https://github.com/raydium-io/raydium-cpi", branch = "anchor-0.31.1", package = "raydium-clmm-cpi", features = ["devnet"] }
+# Pinned for Solana platform-tools rustc 1.79 (same pins as the teacher's reference)
+blake3 = "=1.5.5"
+constant_time_eq = "=0.3.1"

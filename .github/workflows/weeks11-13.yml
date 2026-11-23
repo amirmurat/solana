@@ -1,0 +1,47 @@
+name: Weeks 11-13 Raydium CLMM vault
+on:
+  workflow_dispatch:
+  push:
+    branches: [weeks11-13-current-assignment]
+    paths: ['06-clmm-vault/**', '.github/workflows/weeks11-13.yml']
+  pull_request:
+    paths: ['06-clmm-vault/**', '.github/workflows/weeks11-13.yml']
+permissions:
+  contents: read
+jobs:
+  raydium-localnet:
+    runs-on: ubuntu-22.04
+    defaults:
+      run:
+        working-directory: 06-clmm-vault
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Rust, Solana 2.1.0 and Anchor 0.31.1
+        run: |
+          rustup toolchain install stable --profile minimal
+          sh -c "$(curl -sSfL https://release.anza.xyz/v2.1.0/install)"
+          echo "$HOME/.local/share/solana/install/active_release/bin" >> "$GITHUB_PATH"
+          cargo install anchor-cli --version 0.31.1 --locked
+      # No lockfile yet: install pinned versions, then publish the generated lock as an artifact
+      - run: npm install --no-audit --no-fund
+      - name: Generate disposable local-only program identity
+        run: |
+          mkdir -p target/deploy evidence
+          solana-keygen new --silent --no-bip39-passphrase --outfile target/deploy/clmm_vault-keypair.json >/dev/null
+          anchor keys sync
+      - name: Build and Rust unit tests
+        run: |
+          anchor build 2>&1 | tee evidence/ci-build.txt
+          cargo test --lib 2>&1 | tee evidence/ci-rust-tests.txt
+      - name: Localnet with the real Devnet Raydium CLMM binary
+        run: bash scripts/test-local.sh
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: weeks11-13-evidence
+          path: |
+            06-clmm-vault/evidence/
+            06-clmm-vault/package-lock.json
