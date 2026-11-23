@@ -1,0 +1,23 @@
+
+> clmm-vault@0.1.0 create-pool
+> ts-node scripts/create-clmm-pool.ts
+
+Cluster: devnet
+Wallet : Dz87D4coUDMXK76jUzD3sJGcYWNkdAgFdR9P8sJkhfi3
+Balance: 5 SOL
+
+[1/3] Creating test tokens...
+  TOKEN_A: 24tYXbbF91aJ5VgjPTVpnPUVMz3WuMnreELWdG7TcbwM (minted 1000000)
+  TOKEN_B: 4iaDcuM8aMoVtBRFTMjp7RqyEHx7PM5AocHkA91J56So (minted 1000000)
+
+[2/3] Creating Raydium CLMM pool...
+  Config: CD4aJtX11cqTCAc83nxSPkkh5JW2yjD6uwHeovjqQ1qu (tickSpacing=60, fee=0.25%)
+simulate tx string: [
+  'ATkrhzFcQAWqpwIE/BQo4PoK2H63wMVJPfhovLF+L2zjh+VQInk9bOJELt2mYTMKS2RH+Sez9OHGiXXAP7YvrwUBAAcNwO5im1FsV538uuSlRgv4Girq8wHRJ7mTtgCh+9/8/DQoMzrHcZC1WzXpablIWsRpi8dnIhFKbngkAdWDjP/Tw01Gm2z7XcaaSQdMRNz9lJPIuwwpAvOzY+eICEGtjzaCmzJZdbXw9GF+Fx+K7mPer22tn8XFjkM55hwuW+T2W7TRIqzzFfeJsG4+nYDPTbYyHcAGROzyU9nXv/cs1wrISPrgK0WFAnyvaqGpHlyf+GNMyVVdONcMNr4bb2BsZb+gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP2rW5lT4JNQw+e4ApAqw29+czFpaGXiHPXFv44XOisDc5buSkFSrii+doI70BGgkEMbbYJWF2RlVRDRPHGjW8poeRPhSVeE44qR2wtj8RcErlOonG8Za8xTdpqRyaPyy4mJc0/LOMkWjYU8dTtrikNhDN0yWvu8cv1BU2283CWAan1RcZLFxRIYzJTD1K8X9Y2u4Im6H9ROPb2YoAAAAABt324ddloZPZy+FGzut5rBy0he1fWzeROoz1hX7/AKk6X93v+QehCV8PWNOtSEojBlgPttZqJpjBeqRKrZkUPAEKDQAJAwcIBQIEAQwMBgsg6ZLRjs9oQLwAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAA='
+]
+  Pool : BSpiuNNydVMdY8m5dwK6V2spChuiftCfg9w2mzhqRE9H
+  Owner: DRayAUgENGQBKVaX8owNhgzkEDyoHTGVEGHVJT1E9pfH
+  Tx   : https://explorer.solana.com/tx/ckhGDwxzWTkp7MLkGztuTmAE6v4V2HDt7gRqggV3C2mpBRRNMX676a9kFQx5pwhrZHxzzqW97WJDVXP41cKwiwH?cluster=devnet
+
+[3/3] Saving /home/runner/work/solana/solana/06-clmm-vault/pool-devnet.json
+Done.

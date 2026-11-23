@@ -1,0 +1,11 @@
+{
+  "cluster": "devnet",
+  "clmmProgram": "DRayAUgENGQBKVaX8owNhgzkEDyoHTGVEGHVJT1E9pfH",
+  "tokenA": "24tYXbbF91aJ5VgjPTVpnPUVMz3WuMnreELWdG7TcbwM",
+  "tokenB": "4iaDcuM8aMoVtBRFTMjp7RqyEHx7PM5AocHkA91J56So",
+  "poolId": "BSpiuNNydVMdY8m5dwK6V2spChuiftCfg9w2mzhqRE9H",
+  "ammConfig": "CD4aJtX11cqTCAc83nxSPkkh5JW2yjD6uwHeovjqQ1qu",
+  "tickSpacing": 60,
+  "tx": "ckhGDwxzWTkp7MLkGztuTmAE6v4V2HDt7gRqggV3C2mpBRRNMX676a9kFQx5pwhrZHxzzqW97WJDVXP41cKwiwH",
+  "explorer": "https://explorer.solana.com/address/BSpiuNNydVMdY8m5dwK6V2spChuiftCfg9w2mzhqRE9H?cluster=devnet"
+}
