@@ -270,3 +270,7 @@ npm run mint
 ## Weeks 11–13 Raydium CLMM vault
 
 [06-clmm-vault](06-clmm-vault/README.md): own tokens and CLMM pool (week 11), vault swap through Raydium (week 12), vault position with fees (week 13). Overview: [WEEKS-10-13.md](WEEKS-10-13.md).
+
+## Week 14 web UI (MVP)
+
+[06-clmm-vault/app](06-clmm-vault/README.md#неделя-14--web-интерфейс-mvp): Phantom, user card, deposit / withdraw / withdraw_all, balances, pause and in-market blocking; demo-vault and faucet scripts; Devnet workflow `week14-devnet.yml`.

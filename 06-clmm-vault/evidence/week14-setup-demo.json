@@ -1,0 +1,9 @@
+{
+  "rpcUrl": "https://api.devnet.solana.com",
+  "programId": "AYsH3fYagZsPtJYGJs2jZyoPY7yP5ncTToEaFMKSCxZo",
+  "tokenMint": "YcAtiA5CzAkxPt3HXXsZA3XCUU7J5uHS2YALJng464k",
+  "tokenSymbol": "TOKEN_A",
+  "admin": "Dz87D4coUDMXK76jUzD3sJGcYWNkdAgFdR9P8sJkhfi3",
+  "vault": "CauKFQqFHxqQbvgtkbtkYwiQ74ivDtxCxTs8QbWyYPMb",
+  "initializeSignature": "5J5YsdyQKYKnj9n5uFpQGEQv426dicmYQYxDgTGx9Mhzoddo6bw5bTjuDdwy8AMuHgJqAq7fkDcxcMst61vjQRbX"
+}

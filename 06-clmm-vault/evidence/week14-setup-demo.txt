@@ -1,0 +1,10 @@
+
+> clmm-vault@0.1.0 setup-demo
+> ts-node scripts/setup-demo-vault.ts
+
+Программа: AYsH3fYagZsPtJYGJs2jZyoPY7yP5ncTToEaFMKSCxZo
+Админ: Dz87D4coUDMXK76jUzD3sJGcYWNkdAgFdR9P8sJkhfi3 2.54438172 SOL
+TOKEN_A: YcAtiA5CzAkxPt3HXXsZA3XCUU7J5uHS2YALJng464k
+Vault: CauKFQqFHxqQbvgtkbtkYwiQ74ivDtxCxTs8QbWyYPMb
+initialize_vault: https://explorer.solana.com/tx/5J5YsdyQKYKnj9n5uFpQGEQv426dicmYQYxDgTGx9Mhzoddo6bw5bTjuDdwy8AMuHgJqAq7fkDcxcMst61vjQRbX?cluster=devnet
+Готово: app/src/vault-config.json. Токены пользователю: npm run faucet -- <адрес>

@@ -1,0 +1,79 @@
+{
+  "cluster": "devnet",
+  "date": "2026-11-28T12:10:33.158Z",
+  "programId": "AYsH3fYagZsPtJYGJs2jZyoPY7yP5ncTToEaFMKSCxZo",
+  "tokenMint": "YcAtiA5CzAkxPt3HXXsZA3XCUU7J5uHS2YALJng464k",
+  "vault": "CauKFQqFHxqQbvgtkbtkYwiQ74ivDtxCxTs8QbWyYPMb",
+  "user": "Ae3cBvfkHbr2H33kLpQA8dSr5tVBiu9ocutNjTEc7wuV",
+  "signer": "Keypair (headless, тот же lib/client.ts, что у кнопок сайта; Phantom не участвовал)",
+  "steps": [
+    {
+      "step": "faucet",
+      "signature": "38qD5YSinVB6FJuw7Vj7MLt2xK1iQLfHQ7iFKLVRr4cenE18PRmvcXXrSjQDF7jE4cBmCa4GVWVPETD8yNEG8AV1",
+      "explorer": "https://explorer.solana.com/tx/38qD5YSinVB6FJuw7Vj7MLt2xK1iQLfHQ7iFKLVRr4cenE18PRmvcXXrSjQDF7jE4cBmCa4GVWVPETD8yNEG8AV1?cluster=devnet"
+    },
+    {
+      "step": "create_user_card",
+      "signature": "5Y9bz22oDaKy4TQfSXUdEo2yrQCHs7cavaCZdZPMSE3JXjJPB5RR9D6SPTQ28eEvpk3bCVqQThBFqBHrtXkPqajW",
+      "explorer": "https://explorer.solana.com/tx/5Y9bz22oDaKy4TQfSXUdEo2yrQCHs7cavaCZdZPMSE3JXjJPB5RR9D6SPTQ28eEvpk3bCVqQThBFqBHrtXkPqajW?cluster=devnet"
+    },
+    {
+      "step": "deposit 100",
+      "signature": "4RGfVhWWMikAwC9C9rg1uKYfRiEzRm6oGeNusYUyp2KzWXghXtSQAyQH4ZA3cyprBnTKouwE9GPxTepqKaJgTEm",
+      "explorer": "https://explorer.solana.com/tx/4RGfVhWWMikAwC9C9rg1uKYfRiEzRm6oGeNusYUyp2KzWXghXtSQAyQH4ZA3cyprBnTKouwE9GPxTepqKaJgTEm?cluster=devnet"
+    },
+    {
+      "step": "set_paused(true)",
+      "signature": "45A96YKcJXh9rASjTHSfFw3bz425N4weu4ooL4T9SmuVyJhYr3Gj2t6geEFJv3Hfwj65Ut2XvUKdgAFfJ4dbjKK2",
+      "explorer": "https://explorer.solana.com/tx/45A96YKcJXh9rASjTHSfFw3bz425N4weu4ooL4T9SmuVyJhYr3Gj2t6geEFJv3Hfwj65Ut2XvUKdgAFfJ4dbjKK2?cluster=devnet"
+    },
+    {
+      "step": "withdraw 10 shares while paused",
+      "signature": "4w4xqFhqcQ21rrp7xV9GjhuSuf8Vc49ooRasR6mHyP39JjcA6t1qNHKsjvz9qv7jbPXnD8csSK52t2L4aJoeVSi8",
+      "explorer": "https://explorer.solana.com/tx/4w4xqFhqcQ21rrp7xV9GjhuSuf8Vc49ooRasR6mHyP39JjcA6t1qNHKsjvz9qv7jbPXnD8csSK52t2L4aJoeVSi8?cluster=devnet"
+    },
+    {
+      "step": "set_paused(false)",
+      "signature": "5JmmUGbHMoercRj7buq9YyWQxroyQig4jYBaUkogE94HZk9cja77wRaks6Q82vaKJU1rXxkqePC14N3VdAaKL9qF",
+      "explorer": "https://explorer.solana.com/tx/5JmmUGbHMoercRj7buq9YyWQxroyQig4jYBaUkogE94HZk9cja77wRaks6Q82vaKJU1rXxkqePC14N3VdAaKL9qF?cluster=devnet"
+    },
+    {
+      "step": "withdraw 40 shares",
+      "signature": "5CU1zFq38GJqrkpUTp7sdZGvJLbqYdeqQL1LmY8eM4ozt7oo4KoL1jBu3VkfjfxjCDJFGa1LHD9xxNFYZ91iwhid",
+      "explorer": "https://explorer.solana.com/tx/5CU1zFq38GJqrkpUTp7sdZGvJLbqYdeqQL1LmY8eM4ozt7oo4KoL1jBu3VkfjfxjCDJFGa1LHD9xxNFYZ91iwhid?cluster=devnet"
+    },
+    {
+      "step": "withdraw_all",
+      "signature": "3MRwHizZyjSFg6xFxYbJwSFtK5BVbk23vkZFh1o465sNHsN8x251wKQh2ANGuFsZzkTkZxJB6w4x5RbcRi6EZkHf",
+      "explorer": "https://explorer.solana.com/tx/3MRwHizZyjSFg6xFxYbJwSFtK5BVbk23vkZFh1o465sNHsN8x251wKQh2ANGuFsZzkTkZxJB6w4x5RbcRi6EZkHf?cluster=devnet"
+    },
+    {
+      "step": "close_user_card",
+      "signature": "5VKKhPZcRqmfa3ExUJcFkheJE7SeiCxnBr5psrqXh8YD9gzAorxeAu9cQ9Kp1LG8btVx85eFu1bKyGGMq3NM5Y6C",
+      "explorer": "https://explorer.solana.com/tx/5VKKhPZcRqmfa3ExUJcFkheJE7SeiCxnBr5psrqXh8YD9gzAorxeAu9cQ9Kp1LG8btVx85eFu1bKyGGMq3NM5Y6C?cluster=devnet"
+    }
+  ],
+  "rejectedAsExpected": [
+    {
+      "action": "deposit(0.999999)",
+      "error": "BelowMinimum",
+      "message": "Меньше минимального депозита (1 целый токен)."
+    },
+    {
+      "action": "deposit while paused",
+      "error": "VaultPaused",
+      "message": "Vault на паузе: внесение и создание карточек выключены. Вывести токены можно."
+    },
+    {
+      "action": "withdraw(min_tokens_out = quote + 1)",
+      "error": "SlippageExceeded",
+      "message": "Состояние vault изменилось, и вы получили бы меньше показанного. Обновите страницу и повторите."
+    }
+  ],
+  "userTokensAfter": "999000000",
+  "vaultAfter": {
+    "totalTokens": "0",
+    "totalShares": "0",
+    "paused": false
+  }
+}

@@ -146,3 +146,118 @@ A second vault (on TOKEN_B, pair TOKEN_A) checks that a single-token position op
 | `Unauthorized` | Raydium instruction signed by a non-admin | sign with the vault admin |
 | `TooLittleOutputReceived` | swap gave less than `min_amount_out` | lower `min_amount_out` or the amount |
 | `account data too small` on deploy | the program grew (~500 KB) | `solana program extend <PROGRAM_ID> 100000 --url devnet` |
+
+---
+
+## Неделя 14 — web-интерфейс (MVP)
+
+Эталон преподавателя: [0xnurda/vault-dev@0da0a3b](https://github.com/0xnurda/vault-dev/commit/0da0a3b26edc331a4eac35c67b0dd76151c63940) («web UI for vault, demo setup and faucet scripts»). **Контракт на этой неделе не меняется** — сайт работает с программой `clmm_vault` недель 11–13 из этой папки.
+
+### Что умеет сайт (`app/`, Vite + React + TypeScript)
+
+1. **Подключает Phantom** (`window.phantom.solana`, без wallet-adapter); в `yarn dev` есть ещё «Тестовый кошелёк» (ключ в localStorage, в `yarn build` этот код не попадает).
+2. **Показывает vault:** `total_tokens`, `total_shares`, цена 1 share, режим (Обычный / Пауза / В рынке), минимум депозита, реальный резерв, supply shares, пара Raydium и позиция, ссылки Explorer на программу, vault, TOKEN_A и админа.
+3. **Создаёт UserCard** — PDA `["user_card", vault, user]`, одна кнопка.
+4. **Deposit** с превью по формуле `quote()` из `lib.rs`: комиссия 1% (floor) → fee_wallet, net → vault, shares от net. Сумму меньше минимума (1 целый токен) форма не отправляет.
+5. **Withdraw** (ввод shares) и **Вывести всё** (`withdraw_all`). `min_tokens_out` = ровно показанное превью: если состояние vault изменилось между превью и подписью, контракт отклонит с `SlippageExceeded`, а не отдаст меньше.
+6. **Закрыть карточку** после полного выхода — рента возвращается владельцу.
+7. **Балансы:** SOL, TOKEN_A, shares, их стоимость, данные карточки (net deposited, shares, created_at).
+8. **Блокировки как в контракте** (`lib/guards.ts`): `in_market` — выключены deposit и withdraw; `paused` — выключены deposit и создание карточки, вывод работает. Для админа — кнопка паузы.
+9. **Понятные ошибки** (`lib/errors.ts`): все пользовательские `VaultError` (`BelowMinimum`, `VaultPaused`, `InMarket`, `SlippageExceeded`, `AliasedAccount`, …), отмена в кошельке, нет SOL, лимит RPC, неподтверждённая транзакция («могла пройти — не повторяйте вслепую»).
+
+Swap, позицию Raydium и `sync_vault` админ по-прежнему делает скриптами и тестами недель 12–13.
+
+### Как сайт говорит с контрактом
+
+```
+браузер ── Phantom подписывает ──► транзакция ──► devnet RPC ──► clmm_vault
+   ▲                                                                │
+   └──────── чтение VaultState / UserCard / балансов ◄──────────────┘
+```
+
+| Файл | Что делает |
+|---|---|
+| `app/src/idl/clmm_vault.json` | Подмножество IDL: 7 инструкций, которые вызывает сайт и setup-demo, `VaultState`, `UserCard`, все 24 ошибки. CI сверяет его с настоящим `target/idl` (`app/scripts/check-idl.mjs`). |
+| `app/src/lib/pda.ts` | Seeds из `lib.rs`: `vault`, `vault_tokens`, `share_mint` от mint; `user_card` от (vault, user). |
+| `app/src/lib/client.ts` | `makeClient(connection, programId, mint)`: чтение и действия `createCard`, `deposit`, `withdraw`, `withdrawAll`, `closeCard`, `setPaused`. Без `import.meta` — тот же код гоняет devnet-сценарий. ATA для shares / TOKEN_A создаётся в той же транзакции. |
+| `app/src/lib/math.ts` | `quoteDeposit` / `quoteWithdraw` — формулы контракта (bigint, вниз). |
+| `app/src/lib/amount.ts` | «1.5» ↔ `1500000`, только bigint, проверка ≤ u64::MAX. |
+| `app/src/lib/balance.ts` | Баланс ATA; 0 — только если аккаунта нет, ошибки RPC не маскируются. |
+| `app/src/lib/guards.ts`, `errors.ts`, `wallet.ts` | Блокировки кнопок, тексты ошибок, Phantom / тестовый кошелёк. |
+| `app/src/config.ts` + `vault-config.json` | RPC, `programId`, `tokenMint` — пишет `npm run setup-demo`. Пустой конфиг → сайт честно пишет «не настроен». |
+
+### Запуск локально
+
+**1. Админ: программа и демо-vault в devnet** (из `06-clmm-vault`, кошелёк админа с ~5 devnet SOL):
+
+```bash
+npm install
+mkdir -p target/deploy && solana-keygen new --no-bip39-passphrase -o target/deploy/clmm_vault-keypair.json
+anchor keys sync && anchor build
+ANCHOR_WALLET=~/.config/solana/id.json bash scripts/deploy-devnet.sh   # новая identity; W8/W9/W10 адреса скрипт не трогает
+ANCHOR_WALLET=~/.config/solana/id.json npm run setup-demo              # TOKEN_A + initialize_vault → app/src/vault-config.json
+```
+
+Или без локального тулчейна: GitHub Actions → **Week 14 Devnet deploy + UI scenario** → *Run workflow*. Он использует тот же throwaway-секрет `DEVNET_CI_KEYPAIR`, что и пул недели 11, деплоит, создаёт демо-vault, проходит сценарий и коммитит `app/src/vault-config.json` и `evidence/week14-*` в ветку.
+
+**2. Тестовые токены пользователю:**
+
+```bash
+npm run faucet -- <адрес Phantom>        # 1000 TOKEN_A и 0.02 SOL, если у него < 0.01 SOL
+npm run faucet -- <адрес Phantom> 50     # другая сумма
+```
+
+Печатать TOKEN_A может только тот, кто запускал `setup-demo` (mint authority). Оба скрипта сначала сверяют genesis hash devnet (`scripts/w14-devnet.ts`) и не работают с mainnet. Сам SOL для админа — https://faucet.solana.com (нужен вход через GitHub).
+
+**3. Сайт:**
+
+```bash
+cd app
+yarn install
+yarn dev          # http://localhost:5173
+yarn test         # формулы, суммы, PDA, ошибки, блокировки — без сети
+yarn build        # tsc + vite build → app/dist
+```
+
+Phantom: Settings → Developer Settings → **Testnet Mode**, сеть **Solana Devnet**. Если devnet RPC отвечает 429 — свой RPC в `app/.env.local`: `VITE_RPC_URL=https://…` (файл в `.gitignore`, но значение попадает в собранный JS).
+
+**Важно:** не используйте кошелёк админа как пользователя: комиссия идёт на ATA админа, и депозит с неё контракт отклоняет (`AliasedAccount`) — сайт это объясняет.
+
+### Сценарий проверки
+
+| Шаг | Действие | Ожидание |
+|---|---|---|
+| 1 | Подключить Phantom (devnet) | Адрес в шапке, подсказка `npm run faucet -- <адрес>` |
+| 2 | Админ: `npm run faucet -- <адрес>` | Через ≤ 20 с: 1000 TOKEN_A, 0.02 SOL |
+| 3 | «Создать карточку» | «Карточка создана», ссылка Explorer |
+| 4 | Ввести `0.5` в «Внести» | «Меньше минимального депозита (1 TOKEN_A)», кнопка выключена |
+| 5 | Внести `100` | Превью «Комиссия 1 · в vault 99 · ≈ 99 shares» (на свежем vault); после — shares 99 |
+| 6 | Вывести `40` shares | «Получите 40 TOKEN_A»; shares 59 |
+| 7 | «Вывести всё» | shares 0, карточка обнулена, появляется «Закрыть карточку» |
+| 8 | «Закрыть карточку» | Карточки нет, рента вернулась |
+| 9 | Админ: «Поставить на паузу» | У пользователя «Внести» выключено с объяснением, «Вывести» работает |
+
+Автоматическая версия того же сценария на devnet (подписывает Keypair, не Phantom): `DEVNET_ADMIN_KEYPAIR=~/.config/solana/id.json yarn e2e:devnet` → `evidence/week14-devnet-e2e.json` с подписями и ссылками Explorer. Дополнительно проверяет реальные отказы контракта: `BelowMinimum`, `VaultPaused` (и вывод на паузе), `SlippageExceeded`.
+
+### Адрес программы на devnet
+
+Появится в `app/src/vault-config.json` и `evidence/week14-devnet-deploy.txt` после первого запуска workflow / `setup-demo`. **На момент коммита этой ветки программа W14 в devnet не задеплоена** — см. PR.
+
+### Отличия от эталона преподавателя
+
+| Эталон (`simple_vault`) | Здесь (`clmm_vault`) | Почему |
+|---|---|---|
+| `deposit(amount)` без комиссии; превью `amount·S/T` | Комиссия 1% в `fee_wallet` (аккаунт из `VaultState`), минимум, превью показывает fee/net/shares | Так устроен наш контракт с W9 |
+| «shares есть, токенов 0» → 1:1 | → `InvalidAccounting` (форма не отправляет) | Так требует `quote()` в `lib.rs` |
+| `withdraw(shares)` | `withdraw(shares, min_tokens_out)`, `withdraw_all(min_tokens_out)`, `close_user_card` | Наши инструкции W10 |
+| Только `in_market` | `in_market` + `paused` (deposit и card закрыты, вывод открыт), кнопка паузы для админа | Пауза W9 |
+| IDL и типы — полная копия из `target/` | Подмножество IDL + сверка в CI | Сборку app нельзя было запустить без `anchor build` в этой среде; сверка гарантирует совпадение дискриминаторов |
+| `PROGRAM_ID` из IDL | Из `vault-config.json` | В `lib.rs` недель 11–13 зашит адрес W10 (`F4ow…`), devnet-деплой W14 получает новую identity |
+| PDA-тест на аккаунтах devnet демо-vault | На аккаунте, созданном W10-контрактом в CI localnet (те же seeds) | Своего devnet vault на момент коммита ещё нет |
+| `yarn setup-demo` / `yarn faucet` в корне | `npm run setup-demo` / `npm run faucet --` в `06-clmm-vault` (npm, как остальная папка) | Структура репозитория |
+
+### Ограничения MVP
+
+- Только devnet и один vault (из `vault-config.json`). Кнопок swap / позиции / `sync_vault` нет.
+- Данные обновляются после действия и раз в 20 с.
+- Пока vault в рынке, цена share — до выхода в рынок: `total_tokens` обновляется только на `sync_vault`.

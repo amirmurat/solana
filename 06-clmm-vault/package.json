@@ -7,7 +7,9 @@
     "test:raydium": "ts-mocha -p tsconfig.json -t 600000 tests/raydium.ts",
     "typecheck": "tsc --noEmit",
     "create-pool": "ts-node scripts/create-clmm-pool.ts",
-    "devnet": "ts-node scripts/devnet.ts"
+    "devnet": "ts-node scripts/devnet.ts",
+    "setup-demo": "ts-node scripts/setup-demo-vault.ts",
+    "faucet": "ts-node scripts/faucet.ts"
   },
   "dependencies": {
     "@coral-xyz/anchor": "0.31.1",
