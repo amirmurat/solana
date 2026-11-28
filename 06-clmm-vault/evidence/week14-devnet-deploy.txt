@@ -1,0 +1,8 @@
+Program Id: AYsH3fYagZsPtJYGJs2jZyoPY7yP5ncTToEaFMKSCxZo
+
+Signature: 3tMaFwq3WayGg9WLkndghodwHD1Vu5nmH775vxve5ad4G7db4SAvJ4QLzdi225nnRHp62zwiEVTXnfgDFxPdo4ax
+
+programId: AYsH3fYagZsPtJYGJs2jZyoPY7yP5ncTToEaFMKSCxZo
+so sha256: b6478700b83d8d345c00a3756d8146912b38e5b9f46da0fe31fc42a397f92c78
+so bytes: 472744
+explorer: https://explorer.solana.com/address/AYsH3fYagZsPtJYGJs2jZyoPY7yP5ncTToEaFMKSCxZo?cluster=devnet

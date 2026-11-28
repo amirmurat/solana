@@ -4,7 +4,7 @@ use anchor_spl::token::{self, Burn, Mint, MintTo, Token, TokenAccount, Transfer}
 pub mod raydium;
 use raydium::*;
 
-declare_id!("F4owJE4EFYLhcBnbPLHrwsuKLuLFFDnyYKAgARaJZaAx");
+declare_id!("AYsH3fYagZsPtJYGJs2jZyoPY7yP5ncTToEaFMKSCxZo");
 
 #[program]
 pub mod clmm_vault {
