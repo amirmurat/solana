@@ -1,0 +1,58 @@
+name: Week 14 web UI
+on:
+  workflow_dispatch:
+  push:
+    branches: [week14-web-ui]
+    paths: ['06-clmm-vault/**', '.github/workflows/week14.yml']
+  pull_request:
+    paths: ['06-clmm-vault/app/**', '06-clmm-vault/scripts/**', '.github/workflows/week14.yml']
+permissions:
+  contents: read
+jobs:
+  app:
+    name: app — yarn test + yarn build
+    runs-on: ubuntu-22.04
+    defaults:
+      run:
+        working-directory: 06-clmm-vault/app
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: yarn install --frozen-lockfile --non-interactive
+      - run: yarn test 2>&1 | tee ../evidence/week14-app-tests.txt
+      - run: yarn build 2>&1 | tee ../evidence/week14-app-build.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: week14-app
+          path: |
+            06-clmm-vault/app/dist/
+            06-clmm-vault/evidence/week14-app-*.txt
+  idl:
+    name: IDL subset == anchor build, scripts typecheck
+    runs-on: ubuntu-22.04
+    defaults:
+      run:
+        working-directory: 06-clmm-vault
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Rust, Solana 2.1.0 and Anchor 0.31.1
+        run: |
+          rustup toolchain install stable --profile minimal
+          sh -c "$(curl -sSfL https://release.anza.xyz/v2.1.0/install)"
+          echo "$HOME/.local/share/solana/install/active_release/bin" >> "$GITHUB_PATH"
+          cargo install anchor-cli --version 0.31.1 --locked
+      - run: npm install --no-audit --no-fund
+      - name: Build with a disposable local identity
+        run: |
+          mkdir -p target/deploy
+          solana-keygen new --silent --no-bip39-passphrase --outfile target/deploy/clmm_vault-keypair.json >/dev/null
+          anchor keys sync
+          anchor build
+      - run: node app/scripts/check-idl.mjs target/idl/clmm_vault.json
+      - run: npm run typecheck

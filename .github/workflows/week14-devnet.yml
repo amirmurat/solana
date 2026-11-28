@@ -1,0 +1,88 @@
+name: Week 14 Devnet deploy + UI scenario
+# Деплоит clmm_vault (контракт W11–13, на W14 не меняется) в официальный Devnet под НОВОЙ identity,
+# создаёт демо-vault (npm run setup-demo) и проходит сценарий сайта тем же lib/client.ts:
+# faucet → create card → deposit → withdraw → withdraw_all → close card (+ реальные отказы контракта).
+# Кошелёк — тот же throwaway DEVNET_CI_KEYPAIR, что у week11-devnet-pool.yml; ключ не печатается и не коммитится.
+# Повторный запуск не деплоит заново, если programId из vault-config.json уже исполняемый в Devnet.
+on:
+  workflow_dispatch:
+  push:
+    branches: [week14-web-ui]
+    paths: ['.github/workflows/week14-devnet.yml']
+permissions:
+  contents: write
+concurrency: week14-devnet
+jobs:
+  devnet:
+    runs-on: ubuntu-22.04
+    defaults:
+      run:
+        working-directory: 06-clmm-vault
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Rust, Solana 2.1.0 and Anchor 0.31.1
+        run: |
+          rustup toolchain install stable --profile minimal
+          sh -c "$(curl -sSfL https://release.anza.xyz/v2.1.0/install)"
+          echo "$HOME/.local/share/solana/install/active_release/bin" >> "$GITHUB_PATH"
+          cargo install anchor-cli --version 0.31.1 --locked
+      - run: npm install --no-audit --no-fund
+      - run: yarn install --frozen-lockfile --non-interactive
+        working-directory: 06-clmm-vault/app
+      - name: Devnet wallet from DEVNET_CI_KEYPAIR (throwaway, Devnet only)
+        env:
+          KEY: ${{ secrets.DEVNET_CI_KEYPAIR }}
+        run: |
+          if [ -z "$KEY" ]; then echo "Secret DEVNET_CI_KEYPAIR is not set"; exit 1; fi
+          mkdir -p "$RUNNER_TEMP/w" evidence
+          printf '%s' "$KEY" > "$RUNNER_TEMP/w/ci.json"
+          echo "ANCHOR_WALLET=$RUNNER_TEMP/w/ci.json" >> "$GITHUB_ENV"
+          [ "$(solana genesis-hash --url https://api.devnet.solana.com)" = EtWTRABZaYq6iMfeYKouRu166VU2xqa1wcaWoxPkrZBG ]
+          echo "CI wallet: $(solana-keygen pubkey "$RUNNER_TEMP/w/ci.json")"
+          solana balance --url https://api.devnet.solana.com "$(solana-keygen pubkey "$RUNNER_TEMP/w/ci.json")"
+      - name: Already deployed?
+        id: state
+        run: |
+          ID=$(node -p 'require("./app/src/vault-config.json").programId')
+          if [ -n "$ID" ] && solana program show --url https://api.devnet.solana.com "$ID" >/dev/null 2>&1; then
+            echo "deployed=$ID" >> "$GITHUB_OUTPUT"; echo "Program $ID already on Devnet — skip deploy and setup"
+          fi
+      - name: Build under a new program identity and deploy to Devnet
+        if: steps.state.outputs.deployed == ''
+        run: |
+          mkdir -p target/deploy
+          solana-keygen new --silent --no-bip39-passphrase --outfile target/deploy/clmm_vault-keypair.json >/dev/null
+          anchor keys sync
+          anchor build 2>&1 | tail -5
+          node app/scripts/check-idl.mjs target/idl/clmm_vault.json
+          SIZE=$(stat -c%s target/deploy/clmm_vault.so)
+          NEED=$(solana rent --url https://api.devnet.solana.com "$((SIZE + 45))" --lamports | grep -oE '[0-9]+' | head -1)
+          HAVE=$(solana balance --url https://api.devnet.solana.com --keypair "$ANCHOR_WALLET" --lamports | grep -oE '[0-9]+' | head -1)
+          echo "program .so: $SIZE bytes; rent ≈ $((NEED/1000000)) mSOL; wallet $((HAVE/1000000)) mSOL"
+          if [ "$HAVE" -lt "$((NEED + 400000000))" ]; then
+            echo "::error::Not enough Devnet SOL: need ≈ $(( (NEED + 400000000)/1000000 )) mSOL. Fund $(solana-keygen pubkey "$ANCHOR_WALLET") on https://faucet.solana.com"; exit 1
+          fi
+          bash scripts/deploy-devnet.sh 2>&1 | tee evidence/week14-devnet-deploy.txt
+          ID=$(solana-keygen pubkey target/deploy/clmm_vault-keypair.json)
+          { echo "programId: $ID"; echo "so sha256: $(sha256sum target/deploy/clmm_vault.so | cut -d' ' -f1)"; echo "so bytes: $SIZE";
+            echo "explorer: https://explorer.solana.com/address/$ID?cluster=devnet"; } >> evidence/week14-devnet-deploy.txt
+          PROGRAM_ID="$ID" npm run setup-demo 2>&1 | tee evidence/week14-setup-demo.txt
+      - name: UI scenario on Devnet (same lib/client.ts as the buttons)
+        working-directory: 06-clmm-vault/app
+        run: DEVNET_ADMIN_KEYPAIR="$ANCHOR_WALLET" yarn e2e:devnet 2>&1 | tee ../evidence/week14-devnet-e2e.txt
+      - name: Build the site against the Devnet config
+        working-directory: 06-clmm-vault/app
+        run: yarn test && yarn build
+      - name: Commit config and evidence
+        if: always()
+        run: |
+          rm -f "$RUNNER_TEMP/w/ci.json"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add app/src/vault-config.json evidence/week14-* programs/clmm-vault/src/lib.rs Anchor.toml 2>/dev/null || true
+          git diff --cached --quiet && { echo "nothing to commit"; exit 0; }
+          git commit -m "Week 14: Devnet deploy, demo vault and UI scenario evidence $(node -p 'require("./app/src/vault-config.json").programId')"
+          git push origin HEAD:${GITHUB_REF_NAME}

@@ -1,0 +1,7 @@
+{
+  "rpcUrl": "https://api.devnet.solana.com",
+  "programId": "",
+  "tokenMint": "",
+  "tokenSymbol": "TOKEN_A",
+  "admin": ""
+}
