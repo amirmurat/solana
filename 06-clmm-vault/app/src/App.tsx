@@ -6,7 +6,7 @@ import type { UserView, VaultView } from "./lib/client";
 import { describeError } from "./lib/errors";
 import { blockedActions } from "./lib/guards";
 import { quoteDeposit, quoteWithdraw, sharePrice } from "./lib/math";
-import { client } from "./lib/vault";
+import { client as vaultClient } from "./lib/vault";
 import { connectInjected, devWallet, hasInjectedWallet, onInjectedEvent, type BrowserWallet } from "./lib/wallet";
 
 const MIN_SOL = 0.005; // примерно на карточку и пару токен-аккаунтов
@@ -41,6 +41,7 @@ export default function App() {
   const userChoseWallet = useRef(false);
 
   const refresh = useCallback(async () => {
+    const client = vaultClient;
     if (!client) return;
     const id = ++requestId.current;
     const w = walletRef.current;
@@ -119,7 +120,7 @@ export default function App() {
     }
   }
 
-  if (!CONFIGURED || !client) {
+  if (!CONFIGURED || !vaultClient) {
     return (
       <div className="page">
         <h1>CLMM Vault</h1>
@@ -131,6 +132,8 @@ export default function App() {
     );
   }
 
+  // локальная const: сужение импорта до не-null не переносится в колбэки ниже (TS18047)
+  const client = vaultClient;
   const dec = vault?.decimals ?? 6; // share_mint: mint::decimals = token_mint.decimals
   const tokenFmt = (raw: bigint) => `${formatAmount(raw, dec)} ${TOKEN_SYMBOL}`;
   const shareFmt = (raw: bigint) => `${formatAmount(raw, dec)} shares`;
